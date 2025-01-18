@@ -1,5 +1,9 @@
 import React from "react";
 import "./Services.css";
+import image1 from '../assets/Coding workshop-amico.png';
+import image2 from '../assets/Sign up-amico.png';
+import image3 from '../assets/Business deal-amico.png';
+
 const Feature = ({ title, description, image }) => {
   return (
     <div className="feature">
@@ -15,19 +19,19 @@ const FeaturesSection = () => {
       title: " Courses Buy and Sell",
       description:
         "Easily buy and sell educational courses. Explore diverse topics or list your own courses to share knowledge and earn.",
-      image: "src/assets/Coding workshop-amico.png",
+      image: image1,
     },
     {
       title: "User Authentication",
       description:
         "Ensures secure access by requiring users to sign up or log in before browsing product information, protecting sensitive data.",
-      image: "src/assets/Sign up-amico.png",
+      image: image2,
     },
     {
       title: "Barter System",
       description:
         "Facilitates direct exchange of goods and services, allowing users to trade items without monetary transactions.",
-      image: "src/assets/Business deal-amico.png",
+      image: image3,
     },
   ];
 
@@ -58,3 +62,4 @@ const FeaturesSection = () => {
 };
 
 export default FeaturesSection;
+  
