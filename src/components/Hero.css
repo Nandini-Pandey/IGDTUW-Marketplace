@@ -1,0 +1,88 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10%;
+  background: linear-gradient(235deg, #f8fff0, #f8fff1);
+}
+
+.hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1900px;
+}
+
+.hero-left {
+  flex: 1.5;
+  padding-right: 10px;
+}
+
+.hero-right {
+  flex: 1.1;
+  text-align: right;
+  margin-left: 30px;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: bold;
+  color:rgb(217, 176, 73);
+  margin-bottom: 20px;
+}
+
+.hero-title p{
+  font-size: 4.5rem;
+  font-weight: bolder;
+  color:darkolivegreen
+}
+
+.hero-description {
+  font-size: 1.3rem;
+  line-height: 1.8;
+  margin-bottom: 30px;
+  color:#333;
+}
+
+.cta-buttons {
+  margin-top: 20px;
+}
+
+.cta-buttons .btn {
+  background-color: #71f163;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bolder;
+  font-size: 1.5rem;
+}
+
+.cta-buttons .btn:hover {
+  background-color: #4de745;
+}
+
+.hero-img {
+  width: 100%;
+  max-width: 600px;
+}
+
