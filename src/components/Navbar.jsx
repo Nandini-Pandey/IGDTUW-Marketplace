@@ -1,20 +1,22 @@
-import React from 'react';
-import logoImage from '../assets/logo.jpg'; 
-import './Navbar.css';
+import React from "react";
+import { Link } from "react-router-dom"; 
+import logoImage from "../assets/logo.jpg";
+import "./Navbar.css";
 
 const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-logo">
         <img src={logoImage} alt="logo" />
-        <a href="/">IGDTUW MARKETPLACE</a>
+        <Link to="/">IGDTUW MARKETPLACE</Link>
       </div>
+      
       <div className="navbar-links">
-        <a href="/"  className="nav-btns">Home</a>
-        <a href="/faq" className="nav-btns">FAQ</a>
-        <a href="/contact" className="nav-btns">Contact Us</a>
-        <a href="/signin" className="signup-btn">Sign In</a>
-        <a href="/signup" className="signup-btn">Sign Up</a>
+        <Link to="/" className="nav-btns">Home</Link>
+        <Link to="/faq" className="nav-btns">FAQ</Link>
+        <Link to="/contact" className="nav-btns">Contact Us</Link>
+        <Link to="/signin" className="signup-btn">Sign In</Link>
+        <Link to="/signup" className="signup-btn">Sign Up</Link>
       </div>
     </nav>
   );
