@@ -7,6 +7,7 @@ import Services from './components/Services';
 import Footer from './components/Footer';
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
+import Faq from "./components/faq";
 
 
 function App() {
@@ -15,7 +16,6 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          {/* Define routes for each page */}
           <Route path="/" element={
             <>
               <Hero />
@@ -25,6 +25,7 @@ function App() {
           } />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
+          <Route path="/faq" element={<Faq />} />
         </Routes>
       </Router>
     </div>
