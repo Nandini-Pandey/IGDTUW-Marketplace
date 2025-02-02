@@ -1,8 +1,144 @@
-.footer {
-    background-color: #e6eed8;
-    padding: 20px;
-    text-align: center;
-    color: #333;
-    font-size: 14px;
+/* General Reset */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Footer Container */
+footer {
+  background-color: #e6eed8;
+  padding: 60px 10%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  box-shadow: 0px -5px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  position: relative;
+}
+
+/* Left Section  */
+.footer-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+#heading {
+  font-family: cursive;
+  font-size: 28px;
+  color: #2e7d32;
+  font-weight: bold;
+  margin-top: 0px;
+}
+
+#Contact {
+  font-size: 20px;
+  color: #4caf50;
+  font-weight: 500;
+}
+
+#soci-icons {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+#soci-icons a img {
+  width: 40px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+#soci-icons a img:hover {
+  transform: scale(1.2);
+  filter: brightness(1.2);
+}
+
+/* Right Section (Two-Column Navigation Links) */
+.footer-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  gap: 15px;
+}
+
+/* Two-Column Grid for Navigation Links */
+#info-contact {
+  display: grid;
+  grid-template-columns: repeat(2, auto); /* Two columns */
+  gap: 10px 50px; /* Row & column gap */
+}
+
+#info-contact a {
+  text-decoration: none;
+  color: rgb(28, 103, 28);
+  font-size: 16px;
+  font-weight: 500;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+#info-contact a:hover {
+  transform: scale(1.1);
+  font-weight: bold;
+  color: rgb(25, 105, 25);
+}
+
+/* Bottom Section - Copyright (Centered) */
+#copyright {
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: #444;
+  margin-top: 40px;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#copyright a {
+  color: #256d25;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+#copyright a:hover {
+  transform: scale(1.1);
+  color: #1b5e20;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  footer {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
   }
-  
+
+  .footer-left,
+  .footer-right {
+      align-items: center;
+      text-align: center;
+  }
+
+  #soci-icons {
+      justify-content: center;
+  }
+
+  #info-contact {
+      grid-template-columns: 1fr; /* One column on smaller screens */
+      align-items: center;
+  }
+
+  #copyright {
+      position: relative;
+      bottom: 0;
+  }
+}

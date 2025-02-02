@@ -1,0 +1,113 @@
+/* General Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(235deg, #c6d9b3, #f8fff1);
+  }
+  
+  /* Container */
+  .contact-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  
+  /* Card */
+  .contact-card {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+  }
+  
+  /* Title & Subtitle */
+  .contact-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .contact-subtitle {
+    font-size: 18px;
+    text-align: center;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  .contact-description {
+    font-size: 14px;
+    text-align: center;
+    color: #777;
+    margin-bottom: 30px;
+  }
+  
+  /* Form */
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px;
+  }
+  
+  input,
+  textarea {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  input:focus,
+  textarea:focus {
+    border-color: #77b977;
+    outline: none;
+  }
+  
+  textarea {
+    resize: none;
+  }
+  
+  /* Button */
+  .submit-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #77b977;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #66a566;
+  }
+  
+  /* Contact Info */
+  .contact-info {
+    margin-top: 20px;
+    font-size: 14px;
+    color: black;
+    text-align: center;
+  }
+  
+  .contact-info p {
+    margin: 5px 0;
+  }
+  
