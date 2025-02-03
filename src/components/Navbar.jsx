@@ -35,22 +35,25 @@ const Navbar = () => {
           <h1>IGDTUW MARKETPLACE</h1>
         </div>
         <ul id="navbar" className={`${isActive ? "active" : ""}`} onClick={toggleHamburger}>
-          <li>
-            <a href="/">Home</a>
-          </li>
-          <li>
-            <a href="/faq">FAQ</a>
-          </li>
-          <li>
-            <a href="/contact">Contact us</a>
-          </li>
-          <li>
-            <button className="logout"><a href ="/signin">Sign In</a></button>
-          </li>
-          <li>
-            <button className="logout"><a href ="/signup">Sign Up</a></button>
-          </li>
-
+        <li>
+  <Link to="/">Home</Link>  {/* ✅ Use Link instead of a */}
+</li>
+<li>
+  <Link to="/faq">FAQ</Link>
+</li>
+<li>
+  <Link to="/contact">Contact us</Link>
+</li>
+<li>
+  <button className="logout">
+    <Link to="/signin">Sign In</Link>
+  </button>
+</li>
+<li>
+  <button className="logout">
+    <Link to="/signup">Sign Up</Link>
+  </button>
+</li>
         </ul>
 
 
