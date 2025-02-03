@@ -1,4 +1,3 @@
-
 .signin-container {
   display: flex;
   justify-content: space-between; 
@@ -95,5 +94,5 @@
   flex: 1; 
   margin-right: 50px;
   display: flex;
-  justify-content: center; ]
+  justify-content: center; 
 }
