@@ -21,7 +21,7 @@ const Contact = () => {
                 <input type="email" id="email" placeholder="Enter your email" />
               </div>
               <div className="form-group">
-                <label htmlFor="phone">Phone Number</label>
+                <label htmlFor="phone">Mobile</label>
                 <input type="tel" id="phone" placeholder="Enter your phone number" />
               </div>
               <div className="form-group">
