@@ -1,11 +1,12 @@
-import React from "react";
+// import React from "react";
+import { Link, useLocation } from "react-router-dom";
 import "./Navbar.css";
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import marketplaceLogo from "../assets/retailer.png";
 
 const Navbar = () => {
   const [isActive, setIsActive] = useState(false);
+  const location = useLocation(); // Get current route
 
   const toggleHamburger = () => {
     setIsActive(!isActive);
@@ -15,17 +16,21 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       if (isActive) {
-        setIsActive(false); // Close the navbar when scrolling
+        setIsActive(false);
       }
     };
-
     window.addEventListener("scroll", handleScroll);
-
-    // Cleanup the event listener on component unmount
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [isActive]);
+
+  // Function to handle scrolling for sections when on Home page
+  const handleScrollToSection = (sectionId) => {
+    if (location.pathname === "/") {
+      setTimeout(() => {
+        document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
+      }, 100); // Give time for rendering
+    }
+  };
 
   return (
     <header>
@@ -36,43 +41,31 @@ const Navbar = () => {
         </div>
         <ul id="navbar" className={`${isActive ? "active" : ""}`} onClick={toggleHamburger}>
           <li>
-            <a
-              className="a"
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                document.getElementById("hero-section").scrollIntoView({ behavior: "smooth" });
-              }}
-            >
+            <Link className="a" to="/" onClick={() => handleScrollToSection("hero-section")}>
               Home
-            </a>
+            </Link>
           </li>
           <li>
-            <a
-              className="a"
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                document.getElementById("faq").scrollIntoView({ behavior: "smooth" });
-              }}
-            >
+            <Link className="a" to="/" onClick={() => handleScrollToSection("faq")}>
               FAQ
-            </a>
+            </Link>
           </li>
           <li>
-            <Link className="a" to="/contact">Contact us</Link>
+            <Link className="a" to="/" onClick={() => handleScrollToSection("contact-container")}>
+              Contact us
+            </Link>
           </li>
           <li>
-            <button className="logout"><Link className="signing" to="/signin">Sign In</Link></button>
+            <button className="logout">
+              <Link className="signing" to="/signin">Sign In</Link>
+            </button>
           </li>
           <li>
-            <button className="logout"><Link className="signing" to="/signup">Sign Up</Link></button>
+            <button className="logout">
+              <Link className="signing" to="/signup">Sign Up</Link>
+            </button>
           </li>
-
         </ul>
-
-
-
 
         <div className={`hamburger ${isActive ? "active" : ""}`} onClick={toggleHamburger}>
           <div className="bar"></div>
