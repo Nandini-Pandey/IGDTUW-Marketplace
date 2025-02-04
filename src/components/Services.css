@@ -2,16 +2,18 @@
 * {
   margin: 0;
 }
-section {
+section.features {
   position: relative;
-  padding: 50px 0;
-  font-family: "Roboto", serif;
+  padding: 30px 0;
+  font-family: "Roboto", serif !important;
   color: #333333;
   line-height: 1.5;
-  height: 100vh;
-  background: linear-gradient(to bottom, #f6ffed, white);
+  height: 100%;
+  min-height:90vh;
+  background: #f9fff0;
+  padding-bottom: 0;
 }
-.container {
+.features .container {
   width: 80%;
   margin: 0 auto;
   padding: 20px 20px;
@@ -86,3 +88,4 @@ section {
 .feature img:hover {
   transform: scale(1.05);
 }
+

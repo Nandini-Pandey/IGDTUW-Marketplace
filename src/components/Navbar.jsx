@@ -35,25 +35,40 @@ const Navbar = () => {
           <h1>IGDTUW MARKETPLACE</h1>
         </div>
         <ul id="navbar" className={`${isActive ? "active" : ""}`} onClick={toggleHamburger}>
-        <li>
-  <Link to="/">Home</Link>  {/* ✅ Use Link instead of a */}
-</li>
-<li>
-  <Link to="/faq">FAQ</Link>
-</li>
-<li>
-  <Link to="/contact">Contact us</Link>
-</li>
-<li>
-  <button className="logout">
-    <Link to="/signin">Sign In</Link>
-  </button>
-</li>
-<li>
-  <button className="logout">
-    <Link to="/signup">Sign Up</Link>
-  </button>
-</li>
+          <li>
+            <a
+              className="a"
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById("hero-section").scrollIntoView({ behavior: "smooth" });
+              }}
+            >
+              Home
+            </a>
+          </li>
+          <li>
+            <a
+              className="a"
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById("faq").scrollIntoView({ behavior: "smooth" });
+              }}
+            >
+              FAQ
+            </a>
+          </li>
+          <li>
+            <Link className="a" to="/contact">Contact us</Link>
+          </li>
+          <li>
+            <button className="logout"><Link className="signing" to="/signin">Sign In</Link></button>
+          </li>
+          <li>
+            <button className="logout"><Link className="signing" to="/signup">Sign Up</Link></button>
+          </li>
+
         </ul>
 
 

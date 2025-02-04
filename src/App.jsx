@@ -21,12 +21,13 @@ function App() {
             <>
               <Hero />
               <Services />
+              <Faq />
               <Footer />
             </>
           } />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
-          <Route path="/faq" element={<Faq />} />
+          {/* <Route path="#faq" element={<Faq />} /> */}
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </Router>
