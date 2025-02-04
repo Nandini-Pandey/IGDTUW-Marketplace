@@ -5,33 +5,40 @@ import Typewriter from "typewriter-effect";
 
 const Hero = () => {
   return (
-    <section className="hero-section">
+    <section id="hero-section">
       <div className="hero-content">
         <div className="hero-left">
-          <h1 className="hero-title">
-            <p>Welcome to</p> 
-            <b>
-            <Typewriter
-                onInit={(typewriter) => {
-                    typewriter
-                        .typeString("IGDTUW Marketplace")
-                        .pauseFor(3000)
-                        .deleteAll()
-                        .typeString("IGDTUW Marketplace")
-                        .start();
+          <div className="hero-title">
+            <p>Welcome to</p>
+            <span>
+              <Typewriter
+                options={{
+                  loop: true,  // Enables infinite looping
                 }}
-            />
-            </b>
-          </h1>
-          <br/>
+                onInit={(typewriter) => {
+                  typewriter
+                    .typeString("IGDTUW Marketplace")
+                    .pauseFor(1500)
+                    .deleteAll()
+                    .start();
+                }}
+              />
+            </span>
+          </div>
+          <br />
           <p className="hero-description">
-          IGDTUW Marketplace is a dedicated platform designed to meet the needs of our vibrant university community. It provides students with a seamless way to exchange, borrow, or buy essential items during emergencies or regular campus life. From electronic gadgets and course books to project supplies and everyday necessities, our marketplace connects students to resources they might need on short notice.<br/><br/>
+            IGDTUW Marketplace is a dedicated platform designed to connect students for seamless exchange, borrowing, and buying of essential items. Whether you need gadgets, books, project supplies, or daily necessities, this marketplace ensures quick and easy access to resources.
+            <br /><br />
+            🚀 <b>Why IGDTUW Marketplace?</b>
+            <br />✔ Instant Support - Never feel stuck in an emergency!
+            <br />✔ Smart Sharing - Borrow or lend items effortlessly.
+            <br />✔ Connected Campus - Find what you need, when you need it.
+            <br /><br />
+            From borrowing a calculator for exams to finding a laptop charger in a pinch, our platform bridges the gap and fosters a spirit of trust, collaboration, and community support.
+            <br /><br />
+            🔗 Join us in making campus life more connected, convenient, and hassle-free!<br /><br />
 
-This platform fosters a culture of sharing and support, ensuring that no student feels stuck when faced with unexpected challenges. Whether you're looking to borrow a calculator for exams, sell your old textbooks, or find a laptop charger in a pinch, the IGDTUW Marketplace is here to bridge that gap.<br/><br/>
-
-Our marketplace is built on trust, collaboration, and the spirit of giving back to the community. With easy-to-use features and a strong sense of security, students can confidently list, explore, and connect. Join us in making campus life easier, more connected, and truly supportive.<br/><br/>
-
-<b><i>✨ Because sometimes, all you need is a helping hand from your community.</i></b>
+            <b>✨ Because sometimes, all you need is a helping hand from your community.</b>
           </p>
           <div className="cta-buttons">
             <a href="/explore" className="btn">Explore Now</a>
