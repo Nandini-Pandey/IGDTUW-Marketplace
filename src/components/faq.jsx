@@ -87,12 +87,6 @@ const FaqSection = () => {
             ))}
           </ul>
         </div>
-        <div className="contact-us">
-          <p>Still have unanswered questions?</p>
-          <a href="/contact" className="contact-us-button">
-            Contact Us
-          </a>
-        </div>
       </div>
     </section>
   );

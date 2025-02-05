@@ -91,6 +91,8 @@ textarea {
   border: 1px solid #ccc;
   border-radius: 5px;
   width: 100%;
+  background: rgb(220, 234, 217);
+  color: #1e3514;
 }
 
 input:focus,

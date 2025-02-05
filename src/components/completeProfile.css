@@ -1,56 +1,57 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-div#root, div#root>div {
-  height:auto;
-}
+
 body,
 html {
-  height:auto;
+  height: auto;
   width: 100%;
-  min-width:300px;
+  min-width: 300px;
   min-height: 100%;
   font-family: "Roboto", sans-serif;
   line-height: 1.5;
 }
+
+/* Prevent hiding behind navbar */
 #complete-profile-container {
-  max-height:auto;
+  min-height: 100vh;
   background-color: #f9fff0;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  padding:20px 8px ;
-}
-.profile-main-container {
-  width: 99%;
-  max-width: 960px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   align-items: center;
+  padding: 100px 20px 30px; /* Added top padding */
 }
-#greeting {
+
+/* Main Profile Container */
+.profile-main-container {
+  width: 100%;
+  max-width: 900px;
   display: flex;
   flex-direction: column;
-  width: 45%;
-  padding: 10px;
-  padding-left: 0;
-  margin: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Greeting Section */
+#greeting {
+  text-align: center;
+  margin-bottom: 20px;
+  max-width: 600px;
 }
 
 #greeting h2 {
-  font-size: 2rem;
-  background-image: linear-gradient(to right, #509740, #326d24, #509740);
-  background-size: 200%;
+  font-size: 1.8rem;
+  background-image: linear-gradient(to right, #509740, #326d24);
   background-clip: text;
   color: transparent;
   padding: 10px 0;
   animation: flow 3s linear infinite;
 }
+
 @keyframes flow {
   to {
     background-position: 200%;
@@ -58,32 +59,32 @@ html {
 }
 
 #greeting p {
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 300;
+  color: #333;
 }
 
+/* Profile Container */
 #profile-container {
-  /* width: 100%;
-  max-width: 960px; */
-  border-radius: 1.2em;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 12px;
   background-color: #ffffff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   border: 2px solid #a0ba58;
-  display: flex;
-  flex-direction: column;
-  padding: 20px 25px;
-  z-index: 1;
-  flex-grow: 1;
+  padding: 25px;
 }
 
+/* Heading */
 #profile-container .heading {
-  font-size: 2rem;
+  font-size: 1.6rem;
   font-weight: bold;
   text-align: center;
-  margin-bottom: 0.8rem;
   color: #5b7e31;
+  margin-bottom: 15px;
 }
 
+/* Progress Bar */
 .progress-bar {
   width: 100%;
   height: 10px;
@@ -99,132 +100,75 @@ html {
   transition: width 0.3s ease;
 }
 
+/* Form */
 form#complete-profile-form {
   display: flex;
   flex-direction: column;
   width: 100%;
-  flex-grow: 1;
-  flex-direction: column;
-  margin-bottom: 1rem;
 }
+
 #complete-profile-form label {
   color: #5b7e31;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 600;
 }
+
 #complete-profile-form input,
 #complete-profile-form select {
   width: 100%;
-  padding: 6px;
+  padding: 8px;
   border: 1px solid #d4d4d4;
-  border-radius: 8px;
+  border-radius: 6px;
   background-color: #f9f8f5;
-  color: #333;
-  transition: border 0.3s;
-  font-size: 1.1rem;
-}
-#profile-container input[type="radio"] {
-  width: auto;
-  margin-right: 10px;
-}
-#profile-container .radio-group label {
   font-size: 1rem;
-  font-weight: normal;
-  color: black;
+  transition: border 0.3s;
+  color: #333;
 }
 
 #profile-container input:focus {
-  border-color: #a0ba58;
+  border-color: #76ac63;
   outline: none;
 }
+
+/* Button */
 #profile-container .button {
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin: 0.5rem 0;
-  z-index: 4;
-}
-#profile-container button {
-  background-color: white;
-  padding: 12px 18px;
-  border-radius: 2em;
-  border: none;
-  cursor: "pointer";
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.2rem;
-  font-weight: 400;
-  transition: color 0.3s ease;
-  /* z-index: 4; */
+  margin-top: 15px;
 }
 
-#profile-container button::after {
-  content: "";
-  font-size: 1.2rem;
-  position: absolute;
-  width: 107%;
-  height: 124%;
-  background-image: linear-gradient(to right, #76ac63, #243e1a);
-  z-index: -1;
-  border-radius: 2em;
-}
-#profile-container .form-group {
-  margin-bottom: 1rem;
+#profile-container button {
+  background-color: #5b7e31;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 500;
+  transition: background 0.3s ease;
 }
 
 #profile-container button:hover {
-  background-image: linear-gradient(to right, #76ac63, #243e1a);
-  color: white;
+  background-color: #3f5d22;
 }
 
-@media (max-width: 250px) {
-  #profile-container button {
-    padding: 12px 16px;
-    font-size: 1rem;
-  }
-}
-
-#profile-container input[type="radio"] {
-  position: relative;
-  width: 18px;
-  height: 18px;
-  -webkit-appearance: none;
-  appearance: none;
-  background: #fff;
-  border: 2px solid #1a851e;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-input[type="radio"]:checked::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 10px;
-  height: 10px;
-  background: #255527;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-}
-
-@media (max-width: 800px) {
-  .profile-main-container {
-    flex-direction: column;
-  }
-  #greeting {
-    width: 90%;
-    margin-bottom: 1rem;
-    padding: 20px;
-  }
+/* Responsive Design */
+@media (max-width: 600px) {
   #profile-container {
-    width: 95%;
+    width: 90%;
     padding: 20px;
-    margin-bottom: 30px;
   }
-  .profile-main-container *{
-    font-size: 14px;
+  
+  #greeting h2 {
+    font-size: 1.5rem;
+  }
+  
+  #greeting p {
+    font-size: 0.9rem;
+  }
+  
+  #profile-container .heading {
+    font-size: 1.4rem;
   }
 }
