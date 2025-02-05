@@ -36,6 +36,8 @@
   margin-bottom: 15px;
   border: 1px solid #ddd;
   border-radius: 10px;
+  background: rgb(220, 234, 217);
+  color: #1e3514;
 }
 
 /* Button styles */
