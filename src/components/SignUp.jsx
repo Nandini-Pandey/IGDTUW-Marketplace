@@ -25,7 +25,7 @@ const SignUp = () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       alert("Registration successful!");
-      navigate("/signin"); // Redirect to Sign In page after signup
+      navigate("/complete-profile"); // Redirect to Sign In page after signup
     } catch (err) {
       setError(err.message);
     }

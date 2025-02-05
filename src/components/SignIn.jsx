@@ -18,7 +18,7 @@ const SignIn = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       alert("Logged in successfully!");
-      navigate("/complete-profile"); // Redirect to the dashboard after successful sign-in
+      navigate("/"); // Redirect to the dashboard after successful sign-in
     } catch (err) {
       setError(err.message); // If error occurs, show error message
     }
