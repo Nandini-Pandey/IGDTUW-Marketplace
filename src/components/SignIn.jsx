@@ -5,7 +5,7 @@ import { signInWithEmailAndPassword } from "firebase/auth"; // Firebase Sign In 
 import LoginImg from "../assets/loginimg.jpg";
 import "./SignIn.css";
 
-const SignIn = () => {
+const SignIn = ({ setIsAuthenticated }) => {
   // State for form data and error messages
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,10 +18,12 @@ const SignIn = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       alert("Logged in successfully!");
-      navigate("/"); // Redirect to the dashboard after successful sign-in
+      setIsAuthenticated(true); // Update navbar state
+      navigate("/"); // Redirect to home page
     } catch (err) {
-      setError(err.message); // If error occurs, show error message
+      setError("Invalid email or password. Please try again.");
     }
+
   };
 
   return (
@@ -39,24 +41,24 @@ const SignIn = () => {
           <form onSubmit={handleSignIn}>
             <div className="form-group">
               <label htmlFor="email">College Email ID:</label>
-              <input 
-                type="email" 
-                id="email" 
-                placeholder="College Email ID" 
-                value={email} 
-                onChange={(e) => setEmail(e.target.value)} 
-                required 
+              <input
+                type="email"
+                id="email"
+                placeholder="College Email ID"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
             <div className="form-group">
               <label htmlFor="password">Password:</label>
-              <input 
-                type="password" 
-                id="password" 
-                placeholder="Password" 
-                value={password} 
-                onChange={(e) => setPassword(e.target.value)} 
-                required 
+              <input
+                type="password"
+                id="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
               />
             </div>
             <button type="submit" className="signin-btn">
