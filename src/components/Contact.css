@@ -142,3 +142,8 @@ textarea {
 .contact-info a:hover {
   text-decoration: underline;
 }
+.success-message{
+  color: green;
+  font-size: 1.25rem;
+  margin-top: 10px;
+}
