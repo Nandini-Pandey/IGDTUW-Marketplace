@@ -17,11 +17,9 @@ import CompleteProfile from './components/completeProfile';
 
 
 function App() {
-
   return (
     <div className="App">
       <Router>
-
         <Navbar />
         <Routes>
           <Route path="/" element={
@@ -37,6 +35,8 @@ function App() {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/faq" element={<Faq />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/complete-profile" element={<CompleteProfile />} />
+          <Route path="*" element={<div>Page Not Found</div>} />
         </Routes>
       </Router>
     </div>

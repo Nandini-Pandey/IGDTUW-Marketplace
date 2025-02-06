@@ -3,12 +3,12 @@ import { useState } from "react";
 import "./completeProfile.css";
 
 const CompleteProfile = () => {
-    const [formData, setFormData] = useState({
+    const [userDetails, setUserDetails] = useState({
+        userId: "",
         name: "",
-        email: "",
-        contact: "",
+        phoneNo: "",
         branch: "",
-        year: "",
+        graduationYear: "",
         accommodation: "",
     });
     // Progress Bar
@@ -16,27 +16,53 @@ const CompleteProfile = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData((prevData) => ({
+        setUserDetails((prevData) => ({
             ...prevData,
             [name]: value,
         }));
-        const filledFields = Object.values({ ...formData, [name]: value }).filter(
+        const filledFields = Object.values({ ...userDetails, [name]: value }).filter(
             (field) => field.trim() !== ""
         ).length;
-        const totalFields = Object.keys(formData).length;
+        const totalFields = Object.keys(userDetails).length;
         setProgress((filledFields / totalFields) * 100);
     };
 
     // submitting the form data
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
-        if (progress === 100) {
-            alert("Profile details saved successfully!");
-            // Redirect user or perform other actions
-        } else {
-            alert("Please complete all fields before continuing.");
+        await AddUser();
+        // setUserDetails({...userDetails, [e.target.name]:e.target.value})
+        // if (progress === 100) {
+        //     alert("Profile details saved successfully!");
+        //     // Redirect user or perform other actions
+        // } else {
+        //     alert("Please complete all fields before continuing.");
+        // }
+    };
+
+    const AddUser = async () => {
+        console.log(userDetails)
+        try {
+            const response = await fetch("http://localhost:5000/userinfo", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(userDetails),
+              });
+            const data = await response.json();
+    
+            if (response.ok) {
+                console.log(data.message); // Success message
+            } else {
+                console.log("Failed to save profile: " + data.error);
+            }
+        } catch (error) {
+            console.error("Error saving user details:", error);
+            alert("An error occurred while saving your profile.", error);
         }
     };
+    
 
     return (
         <div id="complete-profile-container">
@@ -61,7 +87,7 @@ const CompleteProfile = () => {
                                 type="text"
                                 id="name"
                                 name="name"
-                                value={formData.name}
+                                value={userDetails.name}
                                 onChange={handleChange}
                                 placeholder="Enter your name"
                                 required
@@ -71,21 +97,21 @@ const CompleteProfile = () => {
                             <label htmlFor="email"> Email:</label>
                             <input
                                 type="email"
-                                name="email"
-                                id="email"
-                                value={formData.email}
+                                name="userId"
+                                id="userId"
+                                value={userDetails.userId}
                                 onChange={handleChange}
                                 placeholder="Enter your email"
                                 required
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="contact"> Phone Number:</label>
+                            <label htmlFor="phoneNo"> Phone Number:</label>
                             <input
                                 type="tel"
-                                name="contact"
-                                id="contact"
-                                value={formData.contact}
+                                name="phoneNo"
+                                id="phoneNo"
+                                value={userDetails.phoneNo}
                                 onChange={handleChange}
                                 placeholder="Enter your contact number"
                                 pattern="[0-9]{10}"
@@ -98,7 +124,7 @@ const CompleteProfile = () => {
                             <select
                                 name="branch"
                                 id="branch"
-                                value={formData.branch}
+                                value={userDetails.branch}
                                 onChange={handleChange}
                                 required
                             >
@@ -111,28 +137,31 @@ const CompleteProfile = () => {
                                 <option value="ece-ai">ECE-AI</option>
                                 <option value="it">IT</option>
                                 <option value="ai-ml">AI-ML</option>
-                                <option value="mae-dmam">MAE/DMAM</option>
-                                <option value="architecture">Architecture</option>
+                                <option value="mae">MAE/DMAM</option>
+                                <option value="bba">BBA</option>
+                                <option value="bca">BCA</option>
+                                <option value="mca">MCA</option>
+                                <option value="barch">Architecture</option>
                             </select>
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="year">Year of Study:</label>
+                            <label htmlFor="year">Graduation Year:</label>
                             <select
-                                id="year"
-                                name="year"
-                                value={formData.year}
+                                id="graduationYear"
+                                name="graduationYear"
+                                value={userDetails.graduationYear}
                                 onChange={handleChange}
                                 required
                             >
                                 <option value="" disabled>
-                                    Select your year
+                                    Select your graduation year
                                 </option>
-                                <option value="1">1st Year</option>
-                                <option value="2">2nd Year</option>
-                                <option value="3">3rd Year</option>
-                                <option value="4">4th Year</option>
-                                <option value="5">5th Year</option>
+                                <option value="2025">2025</option>
+                                <option value="2026">2026</option>
+                                <option value="2027">2027</option>
+                                <option value="2028">2028</option>
+                                <option value="2029">2029</option>
                             </select>
                         </div>
 
@@ -141,15 +170,15 @@ const CompleteProfile = () => {
                             <div className="radio-group ">
                                 <input
                                     type="radio"
-                                    id="hosteller"
+                                    id="hostel"
                                     name="accommodation"
-                                    value="hosteller"
-                                    checked={formData.accommodation === "hosteller"}
+                                    value="hostel"
+                                    checked={userDetails.accommodation === "hostel"}
                                     onChange={handleChange}
                                     required
                                 />
 
-                                <label htmlFor="hosteller">Hosteller</label>
+                                <label htmlFor="hostel">Hosteller</label>
                             </div>
                             <div className="radio-group">
                                 <input
@@ -157,16 +186,29 @@ const CompleteProfile = () => {
                                     id="day-scholar"
                                     name="accommodation"
                                     value="day-scholar"
-                                    checked={formData.accommodation === "day-scholar"}
+                                    checked={userDetails.accommodation === "day-scholar"}
                                     onChange={handleChange}
                                     required
                                 />
 
                                 <label htmlFor="day-scholar">Day Scholar</label>
                             </div>
+                            <div className="radio-group">
+                                <input
+                                    type="radio"
+                                    id="pg"
+                                    name="accommodation"
+                                    value="pg"
+                                    checked={userDetails.accommodation === "pg"}
+                                    onChange={handleChange}
+                                    required
+                                />
+
+                                <label htmlFor="pg">PG</label>
+                            </div>
                         </div>
                         <div className="button">
-                            <button type="submit">Save & Continue</button>
+                            <button type="submit" onClick={handleSubmit}>Save & Continue</button>
                         </div>
                     </form>
                 </div>
