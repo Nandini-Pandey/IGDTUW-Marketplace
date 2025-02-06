@@ -5,7 +5,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import LoginImg from "../assets/loginimg.jpg";
 import "./SignUp.css";
 
-const SignUp = () => {
+const SignUp = ({ setIsAuthenticated }) => {
   // State for form data
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -25,6 +25,7 @@ const SignUp = () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       alert("Registration successful!");
+      setIsAuthenticated(true); // Update navbar state
       navigate("/complete-profile"); // Redirect to Sign In page after signup
     } catch (err) {
       setError(err.message);
