@@ -1,5 +1,4 @@
 # Logs
-logs
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -7,22 +6,24 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Node modules
 node_modules
+
+# Build directories
 dist
 dist-ssr
-*.local
-.env
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# System files
 .DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# IDE files
+.vscode/*
+.idea
 
 VITE_FIREBASE_API_KEY="AIzaSyByPrlcUatx8KoqdJ1cEg5ReNaDxM4bCzo"
 VITE_FIREBASE_AUTH_DOMAIN="igdtuw-marketplace.firebaseapp.com"
