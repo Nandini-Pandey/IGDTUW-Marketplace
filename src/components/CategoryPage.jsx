@@ -15,20 +15,23 @@ const CategoryPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 9;
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get('https://updated-6tm3.onrender.com/products');
-        if (response && response.data) {
-          setProducts(response.data);
-        }
-      } catch (error) {
-        console.error('Error fetching products:', error);
+useEffect(() => {
+  const fetchProducts = async () => {
+    try {
+      console.log('Making API request to fetch products...');
+      const response = await axios.get('https://updated-6tm3.onrender.com/products');
+      console.log('Fetched products:', response.data);  // Check what data is returned
+      if (response && response.data) {
+        setProducts(response.data);
       }
-    };
+    } catch (error) {
+      console.error('Error fetching products:', error);  // Log any errors
+    }
+  };
 
-    fetchProducts();
-  }, []);
+  fetchProducts();
+}, []);
+
 
   const filteredProducts = useMemo(() => {
     return products
