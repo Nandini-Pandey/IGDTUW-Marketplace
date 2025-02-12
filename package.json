@@ -11,6 +11,7 @@
     "start": "serve -s dist"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "@emailjs/browser": "^4.4.1",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
