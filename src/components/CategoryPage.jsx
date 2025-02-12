@@ -1,10 +1,11 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import './CategoryPage.css';
-import { products } from '../data/products';
 import NewNavbar from './newNavbar';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const CategoryPage = () => {
+  const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedAccommodation, setSelectedAccommodation] = useState('All');
@@ -13,6 +14,19 @@ const CategoryPage = () => {
   const [sortBy, setSortBy] = useState('name-asc');
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 9;
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/products');
+        setProducts(response.data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const filteredProducts = useMemo(() => {
     return products
@@ -42,7 +56,7 @@ const CategoryPage = () => {
         }
         return 0;
       });
-  }, [searchQuery, selectedCategory, selectedAccommodation, selectedYear, selectedCondition, sortBy]);
+  }, [products, searchQuery, selectedCategory, selectedAccommodation, selectedYear, selectedCondition, sortBy]);
 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
@@ -114,23 +128,23 @@ const CategoryPage = () => {
       </div>
 
       <div className="products-grid">
-      {currentProducts.map((product) => (
-  <div key={product.id} className="product-card">
-    <div className="product-image">
-      <img src={product.img} alt={product.name} />
-    </div>
-    <div className="product-info">
-      <h3 className="product-title">{product.name}</h3>
-      <p><strong>Accommodation:</strong> {product.accommodationType}</p>
-      <p><strong>Condition:</strong> {product.condition}</p>
-      <p className="product-description">{product.description}</p>
-      <div className="product-price-buy">
-        <p className="product-price">₹{product.price.toLocaleString('en-IN')}</p>
-        <Link to={`/product/${product.id}`} className="buy-now-button">Buy Now</Link>
-      </div>
-    </div>
-  </div>
-))}
+        {currentProducts.map((product) => (
+          <div key={product._id} className="product-card">
+            <div className="product-image">
+              <img src={product.img} alt={product.name} />
+            </div>
+            <div className="product-info">
+              <h3 className="product-title">{product.name}</h3>
+              <p><strong>Accommodation:</strong> {product.accommodationType}</p>
+              <p><strong>Condition:</strong> {product.condition}</p>
+              <p className="product-description">{product.description}</p>
+              <div className="product-price-buy">
+                <p className="product-price">₹{product.price.toLocaleString('en-IN')}</p>
+                <Link to={`/product/${product._id}`} className="buy-now-button">Buy Now</Link>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
 
       {totalPages > 1 && (
