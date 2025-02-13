@@ -199,6 +199,7 @@ header .navbar button.logout:hover {
   }
   .logo h1 {
     font-size: 1.3rem;
+
   }
 }
 
@@ -215,6 +216,16 @@ header .navbar button.logout:hover {
   .hamburger.active .bar:nth-child(3) {
     transform:translateY(-0.45rem) rotate(-45deg);
   }
+  .logo h1 {
+    text-align: left;
+    
+  }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: row;
+    }
 }
 
 

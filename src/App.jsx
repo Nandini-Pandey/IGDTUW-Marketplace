@@ -13,6 +13,7 @@ import Contact from "./components/Contact";
 import CompleteProfile from './components/completeProfile';
 import CategoryPage from "./components/CategoryPage";
 import ProductDetail from './components/ProductDetail';
+import UserDashboard from './components/userDashboard';
 
 import NewNavbar from "./components/newNavbar";
 import { auth } from "./firebaseConfig"; // Import Firebase auth
@@ -45,13 +46,14 @@ function App() {
               <Footer />
             </>
           } />
-          <Route path="/category" element={<CategoryPage />} /> 
+          <Route path="/category" element={<CategoryPage />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/signup" element={<SignUp setIsAuthenticated={setIsAuthenticated} />} />
           <Route path="/signin" element={<SignIn setIsAuthenticated={setIsAuthenticated} />} />
           <Route path="/faq" element={<Faq />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/complete-profile" element={<CompleteProfile />} />
+          <Route path="/dashboard" element={<UserDashboard />} />
           <Route path="*" element={<div>Page Not Found</div>} />
         </Routes>
       </Router>
