@@ -56,7 +56,6 @@ const CategoryPage = () => {
 
   return (
     <div className="page-container">
-      <NewNavbar />
 
       <div className="controls-container">
         <div className="search-bar-container">
