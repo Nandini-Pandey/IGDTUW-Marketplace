@@ -14,6 +14,7 @@ import CompleteProfile from './components/completeProfile';
 import CategoryPage from "./components/CategoryPage";
 import ProductDetail from './components/ProductDetail';
 import UserDashboard from './components/userDashboard';
+import ProductUpload from './components/productUpload';
 
 import NewNavbar from "./components/newNavbar";
 import { auth } from "./firebaseConfig"; // Import Firebase auth
@@ -54,6 +55,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/complete-profile" element={<CompleteProfile />} />
           <Route path="/dashboard" element={<UserDashboard />} />
+          <Route path="/product-upload" element={<ProductUpload />} />
           <Route path="*" element={<div>Page Not Found</div>} />
         </Routes>
       </Router>

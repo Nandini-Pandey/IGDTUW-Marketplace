@@ -21,17 +21,17 @@ const NewNavbar = ({ setIsAuthenticated }) => {
         }
     };
 
-    const [isActive, setIsActive] = useState(false);
+    const [isActiveOpen, setIsActiveOpen] = useState(false);
 
     const toggleHamburger = () => {
-        setIsActive(!isActive);
+        setIsActiveOpen(!isActiveOpen);
     };
 
-    // Close navbar on scroll
+    //Close navbar on scroll
     useEffect(() => {
         const handleScroll = () => {
-            if (isActive) {
-                setIsActive(false); // Close the navbar when scrolling
+            if (isActiveOpen) {
+                setIsActiveOpen(false); // Close the navbar when scrolling
             }
         };
 
@@ -41,7 +41,9 @@ const NewNavbar = ({ setIsAuthenticated }) => {
         return () => {
             window.removeEventListener("scroll", handleScroll);
         };
-    }, [isActive]);
+    }, [isActiveOpen]);
+
+
 
     return (
         <header  >
@@ -50,7 +52,7 @@ const NewNavbar = ({ setIsAuthenticated }) => {
                     <img src={marketplaceLogo2} alt="Marketplace logo" />
                     <h1>IGDTUW MARKETPLACE</h1>
                 </div>
-                <ul id="navbar" className={`${isActive ? "active" : ""}`} onClick={toggleHamburger}>
+                <ul id="navbar" className={`${isActiveOpen ? "active" : ""}`} onClick={toggleHamburger}>
                     <li>
                         <Link className="a" to="/" >
                             Home
@@ -62,7 +64,7 @@ const NewNavbar = ({ setIsAuthenticated }) => {
                         </Link>
                     </li>
                     <li>
-                        <Link className="a" to="/" >
+                        <Link className="a" to="/product-upload" >
                             Sell
                         </Link>
                     </li>
@@ -78,7 +80,7 @@ const NewNavbar = ({ setIsAuthenticated }) => {
                     </li>
                 </ul>
                 <button className="logout" onClick={handleLogout} >Logout</button>
-                <div className={`hamburger ${isActive ? "active" : ""}`} onClick={toggleHamburger}>
+                <div className={`hamburger ${isActiveOpen ? "active" : ""}`} onClick={toggleHamburger}>
                     <div className="bar"></div>
                     <div className="bar"></div>
                     <div className="bar"></div>

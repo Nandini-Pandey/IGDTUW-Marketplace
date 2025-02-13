@@ -1,7 +1,17 @@
-import React from 'react'
-import './productUpload.css'
+import React from 'react';
+import './productUpload.css';
+import { useState } from 'react';
 
-const ProductUpload = ({ product }) => {
+const ProductUpload = ({ }) => {
+    const [imagePreview, setImagePreview] = useState(null);
+
+    const handleImageUpload = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const imageUrl = URL.createObjectURL(file); // Creates a temporary preview URL
+            setImagePreview(imageUrl);
+        }
+    };
     return (
         <div className='productUpload'>
 
@@ -24,10 +34,25 @@ const ProductUpload = ({ product }) => {
 
                 <div className="prd-img">
 
-                    <h2>Product Image</h2>
+                    {/* <h2>Product Image</h2>
                     <div className="prd-sub-img">
                         <img src={product.image} alt="" />
-                    </div>
+                    </div> */}
+                    <h2>Upload Product Image</h2>
+
+                    {/* Image Upload Input */}
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                    />
+
+                    {/* Image Preview */}
+                    {imagePreview && (
+                        <div className="prd-sub-img">
+                            <img src={imagePreview} alt="Product Preview" />
+                        </div>
+                    )}
 
                 </div>
 
