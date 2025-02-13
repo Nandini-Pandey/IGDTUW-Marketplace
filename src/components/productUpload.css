@@ -1,33 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html, body {
-    overflow-x: hidden; /* Hides horizontal scroll */
-    width: 100%;
-}
 
 .productUpload {
     min-height: 100vh;
-    width:100%;
-    font-family: "Roboto", sans-serif;
+    max-width: 100%;
     background-color: #f9fff0;
     /* padding: 120px 100px 10px 240px; */
     padding-top: 100px;
     /* color: black; */
     display: flex;
     flex-direction: column;
-    justify-content:center;
-    align-items: center;
     gap: 40px;
+    box-sizing: border-box;
+    font-family: "Roboto", serif;
 }
 
 .product {
-    width:100%;
-    max-width:1400px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     /* grid-template-rows: repeat(2, 1fr); */
@@ -221,7 +208,7 @@ html, body {
 .list {
     background-color: rgba(91, 128, 45, 0.871);
     width: 160px;
-    color:white;
+
     border-radius: 20px;
     /* font-size: 18px; */
     /* font-weight: bold; */
@@ -233,7 +220,6 @@ html, body {
 .list:hover {
     filter: brightness(1.1);
     transform: scale(1.1);
-    color:black;
 }
 
 
@@ -364,10 +350,8 @@ html, body {
         padding-left: 40px;
         /* padding-bottom: 30px; */
         margin-bottom: 30px;
-        
     }
 
-    
     .publish,
     .update,
     .list {
@@ -376,7 +360,6 @@ html, body {
         font-weight: 400;
         letter-spacing: 1px;
         width: 300px;
-        
     }
 
     .prd-sub-price {
@@ -444,6 +427,5 @@ html, body {
         height: 35px;
         width: 300px;
         background-color: #72932c;
-    
     }
 }
