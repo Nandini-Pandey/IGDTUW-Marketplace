@@ -7,24 +7,35 @@ import cors from 'cors';
 
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT ||3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect(process.env.MONGO_URI, {
+// Connect to both databases
+const userDB = mongoose.createConnection(process.env.MONGO_URI_USER, {
     useNewUrlParser: true,
     useUnifiedTopology: true
-}).then(() => console.log('MongoDB connected'))
-  .catch(err => console.error(err));
+});
 
+const productDB = mongoose.createConnection(process.env.MONGO_URI_PRODUCT, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
+
+userDB.on('open', () => console.log('Connected to User Database'));
+userDB.on('error', (err) => console.error('User DB Connection Error:', err));
+
+productDB.on('open', () => console.log('Connected to Product Database'));
+productDB.on('error', (err) => console.error('Product DB Connection Error:', err));
+
+// User Schema and Model
 const userSchema = new mongoose.Schema({
     name: String,
     email: { type: String, unique: true },
     password: String
 });
-
-const User = mongoose.model('User', userSchema);
+const User = userDB.model('User', userSchema);
 
 // Product Schema and Model
 const productSchema = new mongoose.Schema({
@@ -37,8 +48,7 @@ const productSchema = new mongoose.Schema({
     description: { type: String, required: true },
     img: { type: String, required: true }
 });
-
-const Product = mongoose.model('Product', productSchema);
+const Product = productDB.model('Product', productSchema);
 
 // Products API endpoint
 app.get('/api/products', async (req, res) => {
@@ -50,18 +60,40 @@ app.get('/api/products', async (req, res) => {
     }
 });
 
-// Existing routes
+// Signup route
 app.post('/signup', async (req, res) => {
-    // ... existing signup code ...
+    try {
+        const { name, email, password } = req.body;
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = new User({ name, email, password: hashedPassword });
+        await newUser.save();
+        res.status(201).json({ message: 'User registered successfully' });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
 });
 
+// Login route
 app.post('/login', async (req, res) => {
-    // ... existing login code ...
+    try {
+        const { email, password } = req.body;
+        const user = await User.findOne({ email });
+        if (!user) return res.status(400).json({ message: 'User not found' });
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
+
+        const token = jwt.sign({ userId: user._id }, 'your_secret_key', { expiresIn: '1h' });
+        res.json({ token });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 });
 
-// Add root route
+// Root route
 app.get('/', (req, res) => {
-  res.send('Hello, World!');
+    res.send('Hello, World!');
 });
 
+// Start the server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
