@@ -114,23 +114,23 @@ const CategoryPage = () => {
       </div>
 
       <div className="products-grid">
-      {currentProducts.map((product) => (
-  <div key={product.id} className="product-card">
-    <div className="product-image">
-      <img src={product.img} alt={product.name} />
-    </div>
-    <div className="product-info">
-      <h3 className="product-title">{product.name}</h3>
-      <p><strong>Accommodation:</strong> {product.accommodationType}</p>
-      <p><strong>Condition:</strong> {product.condition}</p>
-      <p className="product-description">{product.description}</p>
-      <div className="product-price-buy">
-        <p className="product-price">₹{product.price.toLocaleString('en-IN')}</p>
-        <Link to={`/product/${product.id}`} className="buy-now-button">Buy Now</Link>
-      </div>
-    </div>
-  </div>
-))}
+        {currentProducts.map((product) => (
+          <div key={product.id} className="product-card">
+            <div className="product-image">
+              <img src={product.img} alt={product.name} />
+            </div>
+            <div className="product-info">
+              <h3 className="product-title">{product.name}</h3>
+              <p><strong>Accommodation:</strong> {product.accommodationType}</p>
+              <p><strong>Condition:</strong> {product.condition}</p>
+              <p className="product-description">{product.description}</p>
+              <div className="product-price-buy">
+                <p className="product-price">₹{product.price.toLocaleString('en-IN')}</p>
+                <Link to={`/product/${product.id}`} className="buy-now-button">Buy Now</Link>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
 
       {totalPages > 1 && (

@@ -72,7 +72,7 @@ const NewNavbar = ({ setIsAuthenticated }) => {
                         </Link>
                     </li>
                     <li>
-                        <Link className="a" to="/" >
+                        <Link className="a" to="/dashboard" >
                             Dashboard
                         </Link>
                     </li>
