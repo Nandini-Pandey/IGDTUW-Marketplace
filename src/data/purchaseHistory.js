@@ -6,7 +6,7 @@ const purchaseHistory = [
     name: "Eco-Friendly T-Shirt",
     description: "Made from 100% organic cotton, biodegradable fabric.",
     price: 499.99,
-    image_url: "src/product-images/numerical-methods.png",
+    image_url: "../product-images/numerical-methods.png",
     payment_status: "Payment Successful",
     seller_name: "GreenThreads Store"
   },
@@ -17,7 +17,7 @@ const purchaseHistory = [
     name: "Reusable Water Bottle",
     description: "750ml stainless steel, BPA-free, keeps drinks cold for 12h.",
     price: 799.99,
-    image_url: "src/product-images/numerical-methods.png",
+    image_url: "../product-images/numerical-methods.png",
     payment_status: "Payment Successful",
     seller_name: "EcoHydrate Shop"
   }
