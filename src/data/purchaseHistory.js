@@ -6,7 +6,7 @@ const purchaseHistory = [
     name: "Eco-Friendly T-Shirt",
     description: "Made from 100% organic cotton, biodegradable fabric.",
     price: 499.99,
-    image_url: "../product-images/numerical-methods.png",
+    image_url: "https://github.com/Nandini-Pandey/updated/blob/5591b5f2f356b58a397c7ce6b9b7581fc4d78b60/src/product-images/numerical-methods.png",
     payment_status: "Payment Successful",
     seller_name: "GreenThreads Store"
   },
