@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import wishlistData from '../data/wishlistData';
 import './wishlist.css';
-import emptyWishlist from "../assets/empty-bro.png";
+import emptyWishlist from "../assets/Empty-bro.png";
 
 
 
