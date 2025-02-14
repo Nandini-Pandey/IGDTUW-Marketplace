@@ -5,7 +5,7 @@ const wishlistData = [
     id: 1,
     name: 'Scientific Calculator',
     price: 99.99,
-    image:"src/product-images/ScientificCalculator.webp" ,
+    image:"https://img.etimg.com/photo/msid-102008460,imgsize-60108/BambalioBL-991MSScientificCalculator.jpg" ,
     description: 'High-quality wireless headphones with noise cancellation.',
   },
   {
