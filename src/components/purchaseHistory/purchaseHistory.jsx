@@ -1,7 +1,7 @@
 import React from 'react';
-import purchaseHistory from '../data/purchaseHistory';
+import purchaseHistory from '../../data/purchaseHistory';
 import './purchaseHistory.css';
-import emptyPurchase from "../assets/Shopping-bag.gif";
+import emptyPurchase from "../../assets/Shopping-bag.gif";
 
 const PurchaseHistory = () => (
     <div id="purchase-history-container">

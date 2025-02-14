@@ -1,9 +1,9 @@
 // src/components/Wishlist.js
 
 import React, { useState } from 'react';
-import wishlistData from '../data/wishlistData';
-import './wishlist.css';
-import emptyWishlist from "../assets/Empty-bro.png";
+import wishlistData from '../../data/wishlistData';
+import './Wishlist.css';
+import emptyWishlist from "../../assets/Empty-bro.png";
 
 
 

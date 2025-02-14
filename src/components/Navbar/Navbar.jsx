@@ -2,7 +2,7 @@
 import { Link, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import { useState, useEffect } from "react";
-import marketplaceLogo from "../assets/retailer.png";
+import marketplaceLogo from "../../assets/retailer.png";
 
 const Navbar = () => {
   const [isActiveOpen, setIsActiveOpen] = useState(false);

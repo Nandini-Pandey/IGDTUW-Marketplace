@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import './CategoryPage.css';
-import { products } from '../data/products';
-import NewNavbar from './newNavbar';
+import { products } from '../../data/products';
+import NewNavbar from '../../components/newNavbar/newNavbar';
 import { Link } from 'react-router-dom';
 
 const CategoryPage = () => {

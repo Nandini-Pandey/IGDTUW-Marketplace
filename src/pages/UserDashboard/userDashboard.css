@@ -25,6 +25,7 @@ body{
     background-color: #f9fff0;
     /* overflow: scroll; */
     padding-bottom:0 auto 40px;
+    margin-top:60px;
 
 }
 #dashboard .dashboard-container{

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "./sidebar";
+import Sidebar from "../../components/sidebar";
 import "./userDashboard.css";
-import Profile from "./Profile";
-import WishList from "./WishList";
-import PurchaseHistory from "./purchaseHistory";
-import SellHistory from "./sellHistory";
+import Profile from "../../components/Profile/Profile";
+import WishList from "../../components/Wishlist/Wishlist";
+import PurchaseHistory from "../../components/purchaseHistory/purchaseHistory";
+import SellHistory from "../../components/sellHistory/sellHistory";
 
 const UserDashboard = () => {
     // Load the section from localStorage or default to "profile"

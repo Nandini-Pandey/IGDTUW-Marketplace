@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { products } from "../data/products";
-import NewNavbar from "./newNavbar";
+import { products } from "../../data/products";
+import NewNavbar from "../../components/newNavbar/newNavbar";
 import "./ProductDetail.css";
 
 const names = ["Aadya", "Siya", "Ishita", "Kavya", "Ananya", "Meera", "Sanya"];

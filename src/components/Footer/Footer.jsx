@@ -1,8 +1,8 @@
 import React from "react";
 import "./Footer.css";
-import linkedinimg from "../assets/linkedin.png";
-import instagramimg from "../assets/instagram.png";
-import twitterimg from "../assets/X_logo.jpg";
+import linkedinimg from "../../assets/linkedin.png";
+import instagramimg from "../../assets/instagram.png";
+import twitterimg from "../../assets/X_logo.jpg";
 
 const FooterLink = ({ link, className, image, alt, id, items }) => {
   return (

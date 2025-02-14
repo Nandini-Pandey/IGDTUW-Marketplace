@@ -1,8 +1,8 @@
 import React from "react";
 import "./Services.css";
-import image1 from '../assets/Coding workshop-amico.png';
-import image2 from '../assets/Sign up-amico.png';
-import image3 from '../assets/Business deal-amico.png';
+import image1 from '../../assets/Coding workshop-amico.png';
+import image2 from '../../assets/Sign up-amico.png';
+import image3 from '../../assets/Business deal-amico.png';
 
 const Feature = ({ title, description, image }) => {
   return (

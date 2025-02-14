@@ -3,10 +3,10 @@ import "./newNavbar.css";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../firebaseConfig";
+import { auth } from "../../firebaseConfig";
 import { signOut } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import marketplaceLogo2 from "../assets/retailer.png";
+import marketplaceLogo2 from "../../assets/retailer.png";
 
 const NewNavbar = ({ setIsAuthenticated }) => {
     const navigate = useNavigate();
@@ -78,8 +78,9 @@ const NewNavbar = ({ setIsAuthenticated }) => {
                             Dashboard
                         </Link>
                     </li>
+                    <li><button className="logout" onClick={handleLogout} >Logout</button></li>
                 </ul>
-                <button className="logout" onClick={handleLogout} >Logout</button>
+                
                 <div className={`hamburger ${isActiveOpen ? "active" : ""}`} onClick={toggleHamburger}>
                     <div className="bar"></div>
                     <div className="bar"></div>

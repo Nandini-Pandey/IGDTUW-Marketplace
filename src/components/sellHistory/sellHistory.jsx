@@ -1,5 +1,5 @@
 import React from 'react';
-import sellHistory from '../data/sellHistory';
+import sellHistory from '../../data/sellHistory';
 import './sellHistory.css';
 // import sellHistory from '../sellHistory.js';
 

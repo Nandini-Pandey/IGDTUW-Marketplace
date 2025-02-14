@@ -28,8 +28,7 @@
     flex-direction: column;
     justify-content: space-between;
     background: linear-gradient(235deg, #f8fff0, #f8fff1);
-    padding: 0; /* Remove any unwanted padding */
-    margin: 0; /* Remove any unwanted margin */
+    padding-top: 1000px;
   }
   
   
@@ -40,7 +39,7 @@
   width: 100%;
   max-width: 1200px;
   margin: 20px auto;
-  padding: 0 20px;
+  margin-top:100px;
   }
   
   .filter-sort-controls {
