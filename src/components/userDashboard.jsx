@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "./sidebar";
-import "./UserDashboard.css";
+import "./userDashboard.css";
 import Profile from "./Profile";
 import WishList from "./WishList";
 import PurchaseHistory from "./purchaseHistory";
