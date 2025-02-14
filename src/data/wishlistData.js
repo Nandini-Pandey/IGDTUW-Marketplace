@@ -19,14 +19,14 @@ const wishlistData = [
     id: 3,
     name: 'Jain-Iyengar Numerical Methods',
     price: 129.99,
-    image: "src/product-images/numerical-methods.png",
+    image: "https://5.imimg.com/data5/SELLER/Default/2021/3/MT/FK/KK/59907886/whatsapp-image-2021-03-09-at-10-23-24-am-3--500x500.jpeg",
     description: 'Lightweight e-reader with a high-resolution display.',
     },
   {
     id: 4,
     name: 'Jain-Iyengar Numerical Methods',
     price: 129.99,
-    image: "src/product-images/numerical-methods.png",
+    image: "https://5.imimg.com/data5/SELLER/Default/2021/3/MT/FK/KK/59907886/whatsapp-image-2021-03-09-at-10-23-24-am-3--500x500.jpeg",
     description: 'Lightweight e-reader with a high-resolution display. hello my nanme i spreetik agrwal how are yiu ',
     }
   
