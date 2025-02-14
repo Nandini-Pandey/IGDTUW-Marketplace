@@ -12,7 +12,7 @@ const wishlistData = [
     id: 2,
     name: 'Lab Coat',
     price: 199.99,
-    image: "src/product-images/lab-coat.png",
+    image: "https://cdn11.bigcommerce.com/s-jjm7kgkrrc/images/stencil/1280x1280/products/43261/7046540/32460__23836.1735846886.jpg?c=1",
     description: 'Smart watch with various health tracking features.',
   },
   {
