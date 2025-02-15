@@ -12,6 +12,7 @@ export default defineConfig({
         target: 'http://localhost:3000',
         changeOrigin: true,
         secure: false,
+<<<<<<< Updated upstream
         ws: true,
         configure: (proxy, _options) => {
           proxy.on('error', (err, _req, _res) => {
@@ -24,6 +25,10 @@ export default defineConfig({
             console.log('Received Response from the Target:', proxyRes.statusCode, req.url);
           });
         }
+=======
+        rewrite: (path) => path.replace(/^\/api/, '/api'),
+        ws: true,
+>>>>>>> Stashed changes
       }
     }
   },

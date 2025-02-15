@@ -13,10 +13,11 @@ const CategoryPage = () => {
   const [sortBy, setSortBy] = useState('name-asc');
   const [currentPage, setCurrentPage] = useState(1);
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const productsPerPage = 9;
 
+<<<<<<< Updated upstream
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -25,18 +26,47 @@ const CategoryPage = () => {
         console.log('Response status:', response.status);
         if (!response.ok) {
           throw new Error('Failed to fetch products');
+=======
+  const fetchProducts = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      console.log('Fetching products...');
+      
+      // Use the full URL when in development
+      const API_URL = import.meta.env.DEV ? 'http://localhost:3000' : '';
+      const response = await fetch(`${API_URL}/api/products`, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+>>>>>>> Stashed changes
         }
-        const data = await response.json();
-        console.log('Fetched products:', data);
-        setProducts(data);
-        setLoading(false);
-      } catch (err) {
-        console.error('Error fetching products:', err);
-        setError(err.message);
-        setLoading(false);
+      });
+      
+      console.log('Response status:', response.status);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-    };
+      
+      const data = await response.json();
+      console.log('Fetched products:', data.length);
+      
+      if (!Array.isArray(data)) {
+        throw new Error('Expected array of products but got: ' + typeof data);
+      }
+      
+      setProducts(data);
+    } catch (err) {
+      console.error('Error fetching products:', err);
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  useEffect(() => {
+    console.log('CategoryPage mounted');
     fetchProducts();
   }, []);
 
@@ -90,12 +120,12 @@ const CategoryPage = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  console.log('Loading:', loading);
+  console.log('Loading:', isLoading);
   console.log('Error:', error);
   console.log('Filtered products:', filteredProducts);
   console.log('Current products:', currentProducts);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div>
         <NewNavbar />
@@ -196,7 +226,7 @@ const CategoryPage = () => {
 
       <div className="products-grid">
         {currentProducts.map((product) => (
-          <div key={product.id} className="product-card">
+          <div key={product._id} className="product-card">
             <div className="product-image">
               <img src={product.img} alt={product.name} />
             </div>
@@ -207,7 +237,7 @@ const CategoryPage = () => {
               <p className="product-description">{product.description}</p>
               <div className="product-price-buy">
                 <p className="product-price">₹{product.price.toLocaleString('en-IN')}</p>
-                <Link to={`/product/${product.id}`} className="buy-now-button">Buy Now</Link>
+                <Link to={`/product/${product._id}`} className="buy-now-button">Buy Now</Link>
               </div>
             </div>
           </div>
