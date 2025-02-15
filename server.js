@@ -12,19 +12,6 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
-<<<<<<< Updated upstream
-app.use(cors({
-    origin: [
-        'http://localhost:5173',
-        'http://localhost:5174',
-        'http://localhost:5175',
-        'http://127.0.0.1:5173',
-        'http://127.0.0.1:5174',
-        'http://127.0.0.1:5175'
-    ],
-    credentials: true
-}));
-=======
 app.use(express.urlencoded({ extended: true }));
 
 // CORS middleware
@@ -51,22 +38,7 @@ const mongoOptions = {
     serverSelectionTimeoutMS: 30000,
     socketTimeoutMS: 75000,
     family: 4,
-    dbName: 'igdtuw', // Specify the database name explicitly
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-};
->>>>>>> Stashed changes
-
-// MongoDB Connection Options
-const mongoOptions = {
-    retryWrites: true,
-    w: 'majority',
-    ssl: true,
-    tls: true,
-    tlsAllowInvalidCertificates: true,
-    serverSelectionTimeoutMS: 5000,
-    socketTimeoutMS: 45000,
-    family: 4
+    dbName: 'igdtuw'
 };
 
 // Schemas
@@ -90,35 +62,6 @@ const productSchema = new mongoose.Schema({
 let User, Product;
 let isConnected = false;
 
-<<<<<<< Updated upstream
-const connectDB = async () => {
-    try {
-        if (isConnected) {
-            console.log('Using existing database connection');
-            return;
-        }
-
-        console.log('Connecting to User Database...');
-        const userDB = await mongoose.createConnection(process.env.MONGO_URI_USER, mongoOptions);
-        
-        console.log('Connecting to Product Database...');
-        const productDB = await mongoose.createConnection(process.env.MONGO_URI_PRODUCT, mongoOptions);
-        
-        User = userDB.model('User', userSchema);
-        Product = productDB.model('Product', productSchema);
-        isConnected = true;
-        console.log('MongoDB connections established successfully');
-    } catch (error) {
-        console.error('MongoDB connection error:', error);
-        isConnected = false;
-        // Try to reconnect after 5 seconds
-        setTimeout(connectDB, 5000);
-    }
-};
-
-// Connect to MongoDB
-connectDB();
-=======
 // Connect to MongoDB
 const connectDB = async () => {
     try {
@@ -157,15 +100,10 @@ mongoose.connection.on('disconnected', () => {
 mongoose.connection.on('connected', () => {
     console.log('MongoDB connected successfully');
 });
->>>>>>> Stashed changes
 
 // API Routes
 app.get('/api/products', async (req, res) => {
     try {
-<<<<<<< Updated upstream
-        if (!isConnected) {
-            await connectDB();
-=======
         console.log('Received request for /api/products');
         console.log('MongoDB connection state:', mongoose.connection.readyState);
         console.log('Current database:', mongoose.connection.name);
@@ -176,7 +114,6 @@ app.get('/api/products', async (req, res) => {
         
         if (!Product) {
             throw new Error('Product model not initialized');
->>>>>>> Stashed changes
         }
         
         const products = await Product.find().lean();
@@ -221,12 +158,6 @@ app.get('/api/products/:id', async (req, res) => {
 
 app.post('/signup', async (req, res) => {
     try {
-<<<<<<< Updated upstream
-        if (!isConnected) {
-            await connectDB();
-        }
-=======
->>>>>>> Stashed changes
         const { name, email, password } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User({ name, email, password: hashedPassword });
@@ -240,12 +171,6 @@ app.post('/signup', async (req, res) => {
 
 app.post('/signin', async (req, res) => {
     try {
-<<<<<<< Updated upstream
-        if (!isConnected) {
-            await connectDB();
-        }
-=======
->>>>>>> Stashed changes
         const { email, password } = req.body;
         const user = await User.findOne({ email });
         if (!user) {
@@ -268,12 +193,6 @@ app.get('/', (req, res) => {
     res.send('Server is running');
 });
 
-<<<<<<< Updated upstream
-// Start server
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
-=======
 // Connect to MongoDB and start server only after successful connection
 const startServer = async () => {
     const isConnected = await connectDB();
@@ -285,7 +204,6 @@ const startServer = async () => {
         console.log('Failed to connect to MongoDB. Server not started.');
     }
 };
->>>>>>> Stashed changes
 
 startServer();
 
