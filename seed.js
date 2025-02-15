@@ -4,16 +4,13 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const mongoOptions = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
     retryWrites: true,
     w: 'majority',
     ssl: true,
     tls: true,
-    tlsAllowInvalidCertificates: true
+    tlsAllowInvalidCertificates: true,
+    dbName: 'igdtuw'
 };
-
-const productDB = mongoose.createConnection(process.env.MONGO_URI_PRODUCT, mongoOptions);
 
 const productSchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -25,8 +22,6 @@ const productSchema = new mongoose.Schema({
     description: { type: String, required: true },
     img: { type: String, required: true }
 });
-
-const Product = productDB.model('Product', productSchema);
 
 const products = [
     {
@@ -302,32 +297,52 @@ const products = [
 ];
 
 const seedDatabase = async () => {
+    let connection;
     try {
-        await new Promise((resolve) => {
-            productDB.once('open', () => {
-                console.log('MongoDB connection established');
-                resolve();
-            });
-        });
+        console.log('Starting database seeding...');
+        console.log('Using MongoDB URI:', process.env.MONGO_URI_PRODUCT);
+        
+        connection = await mongoose.connect(process.env.MONGO_URI_PRODUCT, mongoOptions);
+        console.log('Connected to MongoDB:', connection.connection.name);
+        console.log('Connection state:', mongoose.connection.readyState);
 
-        // First, delete all existing products
-        await Product.deleteMany({});
-        console.log('Cleared existing products');
+        const Product = mongoose.model('Product', productSchema);
+
+        // Clear existing products
+        console.log('Clearing existing products...');
+        const deleteResult = await Product.deleteMany({});
+        console.log('Cleared products:', deleteResult);
 
         // Insert new products
-        const insertedProducts = await Product.insertMany(products);
-        console.log(`Successfully seeded database with ${insertedProducts.length} products`);
+        console.log('Inserting new products...');
+        const insertResult = await Product.insertMany(products);
+        console.log('Inserted products:', insertResult.length);
 
-        // Close the database connection
-        await productDB.close();
-        console.log('Database connection closed');
-        process.exit(0);
+        // Verify the insertion
+        const count = await Product.countDocuments();
+        console.log('Total products in database:', count);
+        
+        // Log a sample product
+        const sampleProduct = await Product.findOne();
+        console.log('Sample product:', JSON.stringify(sampleProduct, null, 2));
+
+        console.log('Database seeded successfully!');
     } catch (error) {
         console.error('Error seeding database:', error);
-        process.exit(1);
+        console.error('Error details:', {
+            name: error.name,
+            message: error.message,
+            stack: error.stack,
+            mongoState: mongoose.connection ? mongoose.connection.readyState : 'No connection'
+        });
+    } finally {
+        if (connection) {
+            await connection.disconnect();
+            console.log('Disconnected from MongoDB');
+        }
+        process.exit(0);
     }
 };
 
-// Run the seeding function
 console.log('Starting database seeding...');
 seedDatabase();
