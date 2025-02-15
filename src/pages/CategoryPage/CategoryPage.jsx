@@ -17,16 +17,6 @@ const CategoryPage = () => {
   const [error, setError] = useState(null);
   const productsPerPage = 9;
 
-<<<<<<< Updated upstream
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        console.log('Fetching products...');
-        const response = await fetch('/api/products');
-        console.log('Response status:', response.status);
-        if (!response.ok) {
-          throw new Error('Failed to fetch products');
-=======
   const fetchProducts = async () => {
     try {
       setIsLoading(true);
@@ -39,7 +29,6 @@ const CategoryPage = () => {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
->>>>>>> Stashed changes
         }
       });
       
@@ -100,6 +89,10 @@ const CategoryPage = () => {
             return a.name.localeCompare(b.name);
           case 'name-desc':
             return b.name.localeCompare(a.name);
+          case 'year-asc':
+            return a.year.localeCompare(b.year);
+          case 'year-desc':
+            return b.year.localeCompare(a.year);
           case 'price-asc':
             return a.price - b.price;
           case 'price-desc':
@@ -125,11 +118,26 @@ const CategoryPage = () => {
   console.log('Filtered products:', filteredProducts);
   console.log('Current products:', currentProducts);
 
+  const FilterControls = () => {
+    return (
+      <div className="filter-section">
+        <div className="filter-buttons">
+          <button className={`filter-button ${selectedCategory === 'All' ? 'active' : ''}`} onClick={() => {
+            setSelectedCategory('All');
+            setSelectedAccommodation('All');
+            setSelectedYear('All');
+            setSelectedCondition('All');
+          }}>Clear Filters</button>
+        </div>
+      </div>
+    );
+  }
+
   if (isLoading) {
     return (
       <div>
         <NewNavbar />
-        <div className="loading" style={{ textAlign: 'center', marginTop: '50px' }}>
+        <div className="loading-container">
           <h2>Loading products...</h2>
         </div>
       </div>
@@ -140,9 +148,8 @@ const CategoryPage = () => {
     return (
       <div>
         <NewNavbar />
-        <div className="error" style={{ textAlign: 'center', marginTop: '50px' }}>
+        <div className="error-container">
           <h2>Error: {error}</h2>
-          <button onClick={() => window.location.reload()}>Try Again</button>
         </div>
       </div>
     );
