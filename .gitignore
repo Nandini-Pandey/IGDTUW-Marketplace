@@ -20,11 +20,15 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-*.env
 
 # IDE files
 .vscode/*
 .idea
+
+# Environment variables
+.env
+.env.local
+.env.*.local
 
 VITE_FIREBASE_API_KEY="AIzaSyByPrlcUatx8KoqdJ1cEg5ReNaDxM4bCzo"
 VITE_FIREBASE_AUTH_DOMAIN="igdtuw-marketplace.firebaseapp.com"
@@ -33,4 +37,3 @@ VITE_FIREBASE_STORAGE_BUCKET="igdtuw-marketplace.firebasestorage.app"
 VITE_FIREBASE_MESSAGING_SENDER_ID="495152474344"
 VITE_FIREBASE_APP_ID="1:495152474344:web:72481df1acb8149728015d"
 VITE_FIREBASE_MEASUREMENT_ID="G-0R7GX7RZGP"
-

@@ -1,10 +1,10 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import './CategoryPage.css';
-import { products } from '../../data/products';
 import NewNavbar from '../../components/newNavbar/newNavbar';
 import { Link } from 'react-router-dom';
 
 const CategoryPage = () => {
+  console.log('CategoryPage component rendered');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedAccommodation, setSelectedAccommodation] = useState('All');
@@ -12,9 +12,36 @@ const CategoryPage = () => {
   const [selectedCondition, setSelectedCondition] = useState('All');
   const [sortBy, setSortBy] = useState('name-asc');
   const [currentPage, setCurrentPage] = useState(1);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const productsPerPage = 9;
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        console.log('Fetching products...');
+        const response = await fetch('http://localhost:3000/api/products');
+        console.log('Response status:', response.status);
+        if (!response.ok) {
+          throw new Error('Failed to fetch products');
+        }
+        const data = await response.json();
+        console.log('Fetched products:', data);
+        setProducts(data);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching products:', err);
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   const filteredProducts = useMemo(() => {
+    console.log('Filtering products:', products);
     return products
       .filter((product) => {
         const matchesSearch =
@@ -29,34 +56,89 @@ const CategoryPage = () => {
         const matchesCondition =
           selectedCondition === 'All' || product.condition === selectedCondition;
 
-        return matchesSearch && matchesCategory && matchesAccommodation && matchesYear && matchesCondition;
+        return (
+          matchesSearch &&
+          matchesCategory &&
+          matchesAccommodation &&
+          matchesYear &&
+          matchesCondition
+        );
       })
       .sort((a, b) => {
-        const [field, order] = sortBy.split('-');
-        if (field === 'name') {
-          return order === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
-        } else if (field === 'price') {
-          return order === 'asc' ? a.price - b.price : b.price - a.price;
-        } else if (field === 'year') {
-          return order === 'asc' ? a.year.localeCompare(b.year) : b.year.localeCompare(a.year);
+        switch (sortBy) {
+          case 'name-asc':
+            return a.name.localeCompare(b.name);
+          case 'name-desc':
+            return b.name.localeCompare(a.name);
+          case 'price-asc':
+            return a.price - b.price;
+          case 'price-desc':
+            return b.price - a.price;
+          default:
+            return 0;
         }
-        return 0;
       });
-  }, [searchQuery, selectedCategory, selectedAccommodation, selectedYear, selectedCondition, sortBy]);
+  }, [products, searchQuery, selectedCategory, selectedAccommodation, selectedYear, selectedCondition, sortBy]);
 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
   const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
-  const handlePageChange = (pageNumber) => {
+  const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  console.log('Loading:', loading);
+  console.log('Error:', error);
+  console.log('Filtered products:', filteredProducts);
+  console.log('Current products:', currentProducts);
+
+  if (loading) {
+    return (
+      <div>
+        <NewNavbar />
+        <div className="loading" style={{ textAlign: 'center', marginTop: '50px' }}>
+          <h2>Loading products...</h2>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div>
+        <NewNavbar />
+        <div className="error" style={{ textAlign: 'center', marginTop: '50px' }}>
+          <h2>Error: {error}</h2>
+          <button onClick={() => window.location.reload()}>Try Again</button>
+        </div>
+      </div>
+    );
+  }
+
+  if (filteredProducts.length === 0) {
+    return (
+      <div>
+        <NewNavbar />
+        <div className="no-products" style={{ textAlign: 'center', marginTop: '50px' }}>
+          <h2>No products found matching your criteria</h2>
+          <button onClick={() => {
+            setSearchQuery('');
+            setSelectedCategory('All');
+            setSelectedAccommodation('All');
+            setSelectedYear('All');
+            setSelectedCondition('All');
+          }}>Clear Filters</button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="page-container">
-
+      <NewNavbar />
       <div className="controls-container">
         <div className="search-bar-container">
           <div className="search-bar">
@@ -134,15 +216,15 @@ const CategoryPage = () => {
 
       {totalPages > 1 && (
         <div className="pagination-controls">
-          <button className="pagination-button" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+          <button className="pagination-button" onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>
             Previous
           </button>
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
-            <button key={number} className={`page-number ${currentPage === number ? 'active' : ''}`} onClick={() => handlePageChange(number)}>
+            <button key={number} className={`page-number ${currentPage === number ? 'active' : ''}`} onClick={() => paginate(number)}>
               {number}
             </button>
           ))}
-          <button className="pagination-button" onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+          <button className="pagination-button" onClick={() => paginate(currentPage + 1)} disabled={currentPage === totalPages}>
             Next
           </button>
         </div>

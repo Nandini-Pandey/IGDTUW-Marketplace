@@ -10,34 +10,18 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175'],
+    credentials: true
+}));
 
-// Connect to both databases
-const userDB = mongoose.createConnection(process.env.MONGO_URI_USER, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
-
-const productDB = mongoose.createConnection(process.env.MONGO_URI_PRODUCT, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
-
-userDB.on('open', () => console.log('Connected to User Database'));
-userDB.on('error', (err) => console.error('User DB Connection Error:', err));
-
-productDB.on('open', () => console.log('Connected to Product Database'));
-productDB.on('error', (err) => console.error('Product DB Connection Error:', err));
-
-// User Schema and Model
+// Schemas
 const userSchema = new mongoose.Schema({
     name: String,
     email: { type: String, unique: true },
     password: String
 });
-const User = userDB.model('User', userSchema);
 
-// Product Schema and Model
 const productSchema = new mongoose.Schema({
     name: { type: String, required: true },
     category: { type: String, required: true },
@@ -48,52 +32,145 @@ const productSchema = new mongoose.Schema({
     description: { type: String, required: true },
     img: { type: String, required: true }
 });
-const Product = productDB.model('Product', productSchema);
 
-// Products API endpoint
+// Initialize models
+let User, Product;
+
+// Connect to MongoDB
+const connectToMongoDB = async () => {
+    try {
+        // Connect to MongoDB
+        console.log('Connecting to MongoDB...');
+        await mongoose.connect(process.env.MONGO_URI, {
+            tls: true,
+            tlsAllowInvalidCertificates: true
+        });
+
+        // Initialize models
+        User = mongoose.model('User', userSchema);
+        Product = mongoose.model('Product', productSchema);
+        
+        console.log('MongoDB connection established successfully');
+        return true;
+    } catch (error) {
+        console.error('MongoDB connection error:', error);
+        return false;
+    }
+};
+
+// API Routes
 app.get('/api/products', async (req, res) => {
     try {
-        const products = await Product.find({});
+        if (!Product) {
+            throw new Error('Product model not initialized');
+        }
+        const products = await Product.find();
+        console.log(`Found ${products.length} products`);
         res.json(products);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error('Error fetching products:', error);
+        res.status(500).json({ error: error.message });
     }
 });
 
-// Signup route
 app.post('/signup', async (req, res) => {
     try {
+        if (!User) {
+            throw new Error('User model not initialized');
+        }
         const { name, email, password } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User({ name, email, password: hashedPassword });
         await newUser.save();
         res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        console.error('Error registering user:', error);
+        res.status(400).json({ message: 'Error registering user', error: error.message });
     }
 });
 
-// Login route
-app.post('/login', async (req, res) => {
+app.post('/signin', async (req, res) => {
     try {
+        if (!User) {
+            throw new Error('User model not initialized');
+        }
         const { email, password } = req.body;
         const user = await User.findOne({ email });
-        if (!user) return res.status(400).json({ message: 'User not found' });
-
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
-
-        const token = jwt.sign({ userId: user._id }, 'your_secret_key', { expiresIn: '1h' });
+        if (!user) {
+            return res.status(401).json({ message: 'Invalid email or password' });
+        }
+        const isValidPassword = await bcrypt.compare(password, user.password);
+        if (!isValidPassword) {
+            return res.status(401).json({ message: 'Invalid email or password' });
+        }
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET || 'your-secret-key');
         res.json({ token });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error('Error signing in:', error);
+        res.status(500).json({ message: 'Error signing in', error: error.message });
     }
 });
 
-// Root route
+// Test route
 app.get('/', (req, res) => {
-    res.send('Hello, World!');
+    res.send('Server is running');
 });
 
-// Start the server
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Start server
+const startServer = async () => {
+    let currentPort = PORT;
+    const maxRetries = 10;
+
+    for (let i = 0; i < maxRetries; i++) {
+        try {
+            // First connect to MongoDB
+            const isConnected = await connectToMongoDB();
+            if (!isConnected) {
+                throw new Error('Failed to connect to MongoDB');
+            }
+
+            // Then start the server
+            await new Promise((resolve, reject) => {
+                const server = app.listen(currentPort, () => {
+                    console.log(`Server running on port ${currentPort}`);
+                    resolve();
+                });
+
+                server.on('error', (error) => {
+                    if (error.code === 'EADDRINUSE') {
+                        console.log(`Port ${currentPort} is busy, trying ${currentPort + 1}`);
+                        currentPort++;
+                        server.close();
+                        reject(new Error('Port in use'));
+                    } else {
+                        reject(error);
+                    }
+                });
+            });
+            
+            // If we get here, server started successfully
+            break;
+        } catch (error) {
+            console.error(`Attempt ${i + 1} failed:`, error.message);
+            if (i === maxRetries - 1) {
+                console.error('Max retries reached. Exiting...');
+                process.exit(1);
+            }
+            // Wait before retrying
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+    }
+};
+
+// Handle process errors
+process.on('uncaughtException', (error) => {
+    console.error('Uncaught Exception:', error);
+    process.exit(1);
+});
+
+process.on('unhandledRejection', (error) => {
+    console.error('Unhandled Rejection:', error);
+    process.exit(1);
+});
+
+startServer();
