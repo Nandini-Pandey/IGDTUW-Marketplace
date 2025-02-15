@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "start": "node server.js",
-    "serve": "serve -s dist"
+    "serve": "npx serve -s dist",
     "seed": "node seed.js"
   },
   "dependencies": {
