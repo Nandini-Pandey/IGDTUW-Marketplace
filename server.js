@@ -14,31 +14,17 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// CORS middleware
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    
-    // Handle preflight requests
-    if (req.method === 'OPTIONS') {
-        return res.sendStatus(200);
-    }
-    next();
-});
+// CORS configuration - Allow all origins in development
+app.use(cors());
 
 // MongoDB Connection Options
 const mongoOptions = {
     retryWrites: true,
     w: 'majority',
-    ssl: true,
-    tls: true,
-    tlsAllowInvalidCertificates: true,
     serverSelectionTimeoutMS: 30000,
     socketTimeoutMS: 75000,
     family: 4,
-    dbName: 'igdtuw', // Specify the database name explicitly
+    dbName: 'igdtuw',
     useNewUrlParser: true,
     useUnifiedTopology: true
 };
@@ -68,19 +54,19 @@ const connectDB = async () => {
     try {
         console.log('Connecting to Databases...');
         console.log('Using MongoDB URI:', process.env.MONGO_URI_PRODUCT);
-        
+
         await mongoose.connect(process.env.MONGO_URI_PRODUCT, mongoOptions);
         console.log('MongoDB connection state:', mongoose.connection.readyState);
         console.log('Connected to database:', mongoose.connection.name);
-        
+
         // Initialize models
         User = mongoose.model('User', userSchema);
         Product = mongoose.model('Product', productSchema);
-        
+
         // Verify Product model
         const productCount = await Product.countDocuments();
         console.log(`Found ${productCount} products in database`);
-        
+
         return true;
     } catch (error) {
         console.error('Detailed MongoDB connection error:', error);
@@ -102,35 +88,17 @@ mongoose.connection.on('connected', () => {
     console.log('MongoDB connected successfully');
 });
 
+// Serve static files from the dist directory
+app.use(express.static('dist'));
+
 // API Routes
 app.get('/api/products', async (req, res) => {
     try {
-        console.log('Received request for /api/products');
-        console.log('MongoDB connection state:', mongoose.connection.readyState);
-        console.log('Current database:', mongoose.connection.name);
-        
-        if (mongoose.connection.readyState !== 1) {
-            throw new Error('MongoDB not connected. Current state: ' + mongoose.connection.readyState);
-        }
-        
-        if (!Product) {
-            throw new Error('Product model not initialized');
-        }
-        
-        const products = await Product.find().lean();
-        console.log(`Found ${products.length} products`);
-        if (products.length > 0) {
-            console.log('Sample product:', JSON.stringify(products[0], null, 2));
-        }
+        const products = await Product.find();
         res.json(products);
     } catch (error) {
-        console.error('Detailed error in /api/products:', error);
-        res.status(500).json({ 
-            error: error.message,
-            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined,
-            mongoState: mongoose.connection.readyState,
-            database: mongoose.connection.name
-        });
+        console.error('Error fetching products:', error);
+        res.status(500).json({ error: 'Failed to fetch products' });
     }
 });
 
@@ -138,17 +106,17 @@ app.get('/api/products', async (req, res) => {
 app.get('/api/products/:id', async (req, res) => {
     try {
         console.log('Fetching product with ID:', req.params.id);
-        
+
         if (mongoose.connection.readyState !== 1) {
             throw new Error('MongoDB not connected. Current state: ' + mongoose.connection.readyState);
         }
-        
+
         const product = await Product.findById(req.params.id);
-        
+
         if (!product) {
             return res.status(404).json({ error: 'Product not found' });
         }
-        
+
         console.log('Found product:', product);
         res.json(product);
     } catch (error) {
@@ -189,9 +157,9 @@ app.post('/signin', async (req, res) => {
     }
 });
 
-// Test route
-app.get('/', (req, res) => {
-    res.send('Server is running');
+// Catch-all route for the React app
+app.get('*', (req, res) => {
+    res.sendFile('dist/index.html', { root: '.' });
 });
 
 // Connect to MongoDB and start server only after successful connection
