@@ -13,49 +13,30 @@ const CategoryPage = () => {
   const [sortBy, setSortBy] = useState('name-asc');
   const [currentPage, setCurrentPage] = useState(1);
   const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const productsPerPage = 9;
 
-  const fetchProducts = async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
-      console.log('Fetching products...');
-      
-      // Use the full URL when in development
-      const API_URL = import.meta.env.DEV ? 'http://localhost:3000' : '';
-      const response = await fetch(`${API_URL}/api/products`, {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      });
-      
-      console.log('Response status:', response.status);
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      console.log('Fetched products:', data.length);
-      
-      if (!Array.isArray(data)) {
-        throw new Error('Expected array of products but got: ' + typeof data);
-      }
-      
-      setProducts(data);
-    } catch (err) {
-      console.error('Error fetching products:', err);
-      setError(err.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
-    console.log('CategoryPage mounted');
+    const fetchProducts = async () => {
+      try {
+        console.log('Fetching products...');
+        const response = await fetch('http://localhost:3000/api/products');
+        console.log('Response status:', response.status);
+        if (!response.ok) {
+          throw new Error('Failed to fetch products');
+        }
+        const data = await response.json();
+        console.log('Fetched products:', data);
+        setProducts(data);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching products:', err);
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
     fetchProducts();
   }, []);
 
@@ -89,10 +70,6 @@ const CategoryPage = () => {
             return a.name.localeCompare(b.name);
           case 'name-desc':
             return b.name.localeCompare(a.name);
-          case 'year-asc':
-            return a.year.localeCompare(b.year);
-          case 'year-desc':
-            return b.year.localeCompare(a.year);
           case 'price-asc':
             return a.price - b.price;
           case 'price-desc':
@@ -113,31 +90,16 @@ const CategoryPage = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  console.log('Loading:', isLoading);
+  console.log('Loading:', loading);
   console.log('Error:', error);
   console.log('Filtered products:', filteredProducts);
   console.log('Current products:', currentProducts);
 
-  const FilterControls = () => {
-    return (
-      <div className="filter-section">
-        <div className="filter-buttons">
-          <button className={`filter-button ${selectedCategory === 'All' ? 'active' : ''}`} onClick={() => {
-            setSelectedCategory('All');
-            setSelectedAccommodation('All');
-            setSelectedYear('All');
-            setSelectedCondition('All');
-          }}>Clear Filters</button>
-        </div>
-      </div>
-    );
-  }
-
-  if (isLoading) {
+  if (loading) {
     return (
       <div>
         <NewNavbar />
-        <div className="loading-container">
+        <div className="loading" style={{ textAlign: 'center', marginTop: '50px' }}>
           <h2>Loading products...</h2>
         </div>
       </div>
@@ -148,8 +110,9 @@ const CategoryPage = () => {
     return (
       <div>
         <NewNavbar />
-        <div className="error-container">
+        <div className="error" style={{ textAlign: 'center', marginTop: '50px' }}>
           <h2>Error: {error}</h2>
+          <button onClick={() => window.location.reload()}>Try Again</button>
         </div>
       </div>
     );
@@ -233,7 +196,7 @@ const CategoryPage = () => {
 
       <div className="products-grid">
         {currentProducts.map((product) => (
-          <div key={product._id} className="product-card">
+          <div key={product.id} className="product-card">
             <div className="product-image">
               <img src={product.img} alt={product.name} />
             </div>
@@ -244,7 +207,7 @@ const CategoryPage = () => {
               <p className="product-description">{product.description}</p>
               <div className="product-price-buy">
                 <p className="product-price">₹{product.price.toLocaleString('en-IN')}</p>
-                <Link to={`/product/${product._id}`} className="buy-now-button">Buy Now</Link>
+                <Link to={`/product/${product.id}`} className="buy-now-button">Buy Now</Link>
               </div>
             </div>
           </div>
