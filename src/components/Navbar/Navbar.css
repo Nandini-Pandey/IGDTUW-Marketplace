@@ -22,6 +22,7 @@ header{
 nav.navbar {
   color: black;
   display: flex;
+  flex-direction: row !important;
   flex:1;
   justify-content: space-between;
   align-items: center;

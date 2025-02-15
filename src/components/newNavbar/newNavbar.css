@@ -30,6 +30,7 @@ header{
 nav.navbar {
   color: black;
   display: flex;
+  flex-direction: row !important;
   flex:1;
   justify-content: space-between;
   align-items: center;
@@ -131,6 +132,15 @@ header .navbar button.logout:hover {
     margin-bottom: 5px;
   }
 }
+@media(800px<width<960px){
+  header nav.navbar{
+    height:120px;
+  }
+  div.dashboard-section{
+    padding-top: 25px;
+  }
+}
+
 
 @media(max-width:800px){
   .hamburger{
