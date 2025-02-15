@@ -23,6 +23,7 @@ const SignUp = ({ setIsAuthenticated }) => {
     }
 
     try {
+      localStorage.setItem("userId", email); 
       await createUserWithEmailAndPassword(auth, email, password);
       alert("Registration successful!");
       setIsAuthenticated(true); // Update navbar state

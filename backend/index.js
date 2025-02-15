@@ -15,7 +15,8 @@ const path= require('path')
 
 app.use(express.json());
 const cors = require('cors');
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors());
+
 
 app.use(express.urlencoded({extended: true}))
 console.log("khfkh:", MONGO_URI);
@@ -51,7 +52,7 @@ const userSchema = new mongoose.Schema({
   },  
   graduationYear: {
     type: Number,
-    enum: [2027, 2028, 2029, 2030, 2031], 
+    enum: [2025, 2026, 2027, 2028, 2029], 
     required: true,
   },
   branch: {
@@ -89,3 +90,22 @@ app.post('/userinfo', async (req, res) => {
     
 });
 
+app.get('/userinfo', async (req, res) => {
+  try {
+      const { userId } = req.query; // Get userId from query parameters
+      console.log("Received Request with Query:", req.query);
+      if (!userId) {
+          return res.status(400).json({ success: false, message: "User ID is required" });
+      }
+
+      const user = await User.findOne({ userId });
+      if (!user) {
+          return res.status(404).json({ success: false, message: "User not found" });
+      }
+
+      res.json(user);
+  } catch (error) {
+      console.error("Error fetching user info:", error);
+      res.status(500).json({ success: false, message: "Internal server error" });
+  }
+});

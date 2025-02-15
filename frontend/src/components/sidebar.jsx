@@ -13,8 +13,6 @@ const Sidebar = ({ setCurrentSection }) => {
                 <div className="user-profile-image">
                     <img src={userImage} height="100px" alt="Profile" />
                 </div>
-                <h3>Preetika Agrawal</h3>
-                <p>preetika145btcse23@igdtuw.ac.in</p>
             </div>
             <div className="dashboard-links">
                 <div>DASHBOARD</div>

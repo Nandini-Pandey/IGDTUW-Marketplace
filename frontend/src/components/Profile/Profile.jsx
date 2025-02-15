@@ -1,40 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Profile.css";
 
 const Profile = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({
-        name: "Preetika Agrawal",
-        email: "johndoe@example.com",
-        contact: "9876543210",
-        branch: "cse",
-        year: "2",
-        accommodation: "hosteller",
+        userId: "",
+        name: "",
+        phoneNo: "",
+        branch: "",
+        graduationYear: "",
+        accommodation: "",
     });
 
+    useEffect(() => {
+        const fetchUserProfile = async () => {
+            try {
+                const userId = localStorage.getItem("userId"); // Retrieve from localStorage
+                console.log(userId);
+                if (!userId) {
+                    console.error("User not logged in");
+                    return;
+                }
+    
+                const response = await fetch(`http://localhost:5000/userinfo?userId=${userId}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+    
+                const data = await response.json();
+                setFormData(data);
+            } catch (error) {
+                console.error("Error fetching profile:", error);
+            }
+        };
+    
+        fetchUserProfile();
+    }, []);
+    
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    //toggleEdit : save changes, cancel , edit button
-    const toggleEdit = () => {
-        setIsEditing(!isEditing);
-    };
-
-    const handleSave = () => {
-        // Call API to save the updated profile
-        console.log("Profile saved:", formData);
-        setIsEditing(false);
-    };
-
-    const handleCancel = () => {
-        // Revert changes if necessary (fetch original data from backend)
-        setIsEditing(false);
-    };
-
     return (
         <div id="dashboard-profile-container">
-            <h1 className="heading"><i className="fa-solid fa-circle-info fa-rotate-by" ></i>Basic Info</h1>
+            <h1 className="heading"><i className="fa-solid fa-circle-info"></i> Basic Info</h1>
             <form id="view-profile-form" className="dashboard-profile">
                 <div className="form-group">
                     <label htmlFor="name"> Full Name:</label>
@@ -54,37 +63,25 @@ const Profile = () => {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="email"> Email:</label>
-                    {isEditing ? (
-                        <input
-                            type="email"
-                            name="email"
-                            id="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            placeholder="Enter your email"
-                            required
-                        />
-                    ) : (
-                        <p>{formData.email}</p>
-                    )}
+                    <label htmlFor="userId"> Email:</label>
+                    <p>{formData.userId}</p> {/* Email is not editable */}
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="contact"> Phone Number:</label>
+                    <label htmlFor="phoneNo"> Phone Number:</label>
                     {isEditing ? (
                         <input
                             type="tel"
-                            name="contact"
-                            id="contact"
-                            value={formData.contact}
+                            name="phoneNo"
+                            id="phoneNo"
+                            value={formData.phoneNo}
                             onChange={handleChange}
                             placeholder="Enter your contact number"
                             pattern="[0-9]{10}"
                             required
                         />
                     ) : (
-                        <p>{formData.contact}</p>
+                        <p>{formData.phoneNo}</p>
                     )}
                 </div>
 
@@ -98,44 +95,40 @@ const Profile = () => {
                             onChange={handleChange}
                             required
                         >
-                            <option value="" disabled>
-                                Select your Branch
-                            </option>
+                            <option value="" disabled>Select your Branch</option>
                             <option value="cse">CSE</option>
                             <option value="cse-ai">CSE-AI</option>
                             <option value="ece">ECE</option>
                             <option value="ece-ai">ECE-AI</option>
                             <option value="it">IT</option>
                             <option value="ai-ml">AI-ML</option>
-                            <option value="mae-dmam">MAE/DMAM</option>
-                            <option value="architecture">Architecture</option>
+                            <option value="mae">MAE</option>
+                            <option value="barch">Architecture</option>
                         </select>
                     ) : (
-                        <p>{formData.branch}</p>
+                        <p>{formData.branch.toUpperCase()}</p>
                     )}
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="year">Year of Study:</label>
+                    <label htmlFor="graduationYear">Graduation Year:</label>
                     {isEditing ? (
                         <select
-                            id="year"
-                            name="year"
-                            value={formData.year}
+                            id="graduationYear"
+                            name="graduationYear"
+                            value={formData.graduationYear}
                             onChange={handleChange}
                             required
                         >
-                            <option value="" disabled>
-                                Select your year
-                            </option>
-                            <option value="1">1st Year</option>
-                            <option value="2">2nd Year</option>
-                            <option value="3">3rd Year</option>
-                            <option value="4">4th Year</option>
-                            <option value="5">5th Year</option>
+                            <option value="" disabled>Select your graduation year</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                            <option value="2029">2029</option>
                         </select>
                     ) : (
-                        <p>{formData.year} Year</p>
+                        <p>Graduation Year: {formData.graduationYear}</p>
                     )}
                 </div>
 
@@ -143,18 +136,17 @@ const Profile = () => {
                     <label>Accommodation Type:</label>
                     {isEditing ? (
                         <div>
-                            <div className="radio-group ">
+                            <div className="radio-group">
                                 <input
                                     type="radio"
-                                    id="hosteller"
+                                    id="hostel"
                                     name="accommodation"
-                                    value="hosteller"
-                                    checked={formData.accommodation === "hosteller"}
+                                    value="hostel"
+                                    checked={formData.accommodation === "hostel"}
                                     onChange={handleChange}
                                     required
                                 />
-
-                                <label htmlFor="hosteller">Hosteller</label>
+                                <label htmlFor="hostel">Hosteller</label>
                             </div>
                             <div className="radio-group">
                                 <input
@@ -166,15 +158,15 @@ const Profile = () => {
                                     onChange={handleChange}
                                     required
                                 />
-
                                 <label htmlFor="day-scholar">Day Scholar</label>
                             </div>
                         </div>
                     ) : (
-                        <p>{formData.accommodation === "hosteller" ? "Hosteller" : "Day Scholar"}</p>
+                        <p>{formData.accommodation === "hostel" ? "Hosteller" : "Day Scholar"}</p>
                     )}
                 </div>
             </form>
+
             {isEditing ? (
                 <div className="button-group">
                     <button onClick={handleSave}>Save</button>
@@ -182,9 +174,8 @@ const Profile = () => {
                 </div>
             ) : (
                 <div className="button-group">
-                    <button onClick={toggleEdit}>Edit Profile</button>
+                    <button>Edit Profile</button>
                 </div>
-
             )}
         </div>
     );
