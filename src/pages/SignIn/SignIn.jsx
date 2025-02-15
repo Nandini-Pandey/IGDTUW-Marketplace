@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { auth } from "../firebaseConfig";
+import { auth } from "../../firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth"; // Firebase Sign In function
-import LoginImg from "../assets/loginimg.jpg";
+import LoginImg from "../../assets/loginimg.jpg";
 import "./SignIn.css";
 
 const SignIn = ({ setIsAuthenticated }) => {

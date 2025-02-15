@@ -1,6 +1,6 @@
 import React from 'react';
 import './Hero.css';
-import heroImage from '../assets/Thesis-amico.png';
+import heroImage from '../../assets/Thesis-amico.png';
 import Typewriter from "typewriter-effect";
 
 const Hero = () => {

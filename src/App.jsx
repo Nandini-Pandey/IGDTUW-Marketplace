@@ -1,57 +1,47 @@
-import React from 'react';
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import './App.css';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Services from './components/Services';
-import Footer from './components/Footer';
-import SignUp from "./components/SignUp";
-import SignIn from "./components/SignIn";
-import Faq from "./components/faq";
-import Contact from "./components/Contact";
-import CompleteProfile from './components/completeProfile';
-import CategoryPage from "./components/CategoryPage";
-import ProductDetail from './components/ProductDetail';
+import Navbar from "./components/Navbar/Navbar";
+import NewNavbar from "./components/newNavbar/newNavbar";
+import SignUp from "./pages/SignUp/SignUp";
+import SignIn from "./pages/SignIn/SignIn";
+import Faq from "./components/faq/faq";
+import Contact from "./components/Contact/Contact";
+import CompleteProfile from './pages/CompleteProfile/completeProfile';
+import CategoryPage from "./pages/CategoryPage/CategoryPage";
+import ProductDetail from './pages/ProductDetail/ProductDetail';
+import UserDashboard from './pages/UserDashboard/userDashboard';
+import ProductUpload from './pages/ProductUpload/productUpload';
+import { auth } from "./firebaseConfig"; 
+import { onAuthStateChanged } from "firebase/auth"; 
 
-import NewNavbar from "./components/newNavbar";
-import { auth } from "./firebaseConfig"; // Import Firebase auth
-import { onAuthStateChanged } from "firebase/auth"; // Listen to auth state changes
-
+import LandingPage from "./pages/LandingPage"; 
 
 function App() {
-  // Check user authentication state on app load
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setIsAuthenticated(!!user); // Set true if user exists, false otherwise
+      setIsAuthenticated(!!user);
     });
-    return () => unsubscribe(); // Cleanup on unmount
+    return () => unsubscribe();
   }, []);
-
-
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   return (
     <div className="App">
       <Router>
         {isAuthenticated ? <NewNavbar setIsAuthenticated={setIsAuthenticated} /> : <Navbar />}
         <Routes>
-          <Route path="/" element={
-            <>
-              <Hero />
-              <Services />
-              <Faq />
-              <Contact />
-              <Footer />
-            </>
-          } />
-          <Route path="/category" element={<CategoryPage />} /> 
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/category" element={<CategoryPage />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/signup" element={<SignUp setIsAuthenticated={setIsAuthenticated} />} />
           <Route path="/signin" element={<SignIn setIsAuthenticated={setIsAuthenticated} />} />
           <Route path="/faq" element={<Faq />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/complete-profile" element={<CompleteProfile />} />
+          <Route path="/dashboard" element={<UserDashboard />} />
+          <Route path="/product-upload" element={<ProductUpload />} />
           <Route path="*" element={<div>Page Not Found</div>} />
         </Routes>
       </Router>

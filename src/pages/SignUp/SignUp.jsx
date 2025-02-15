@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { auth } from "../firebaseConfig";
+import { auth } from "../../firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import LoginImg from "../assets/loginimg.jpg";
+import LoginImg from "../../assets/loginimg.jpg";
 import "./SignUp.css";
 
 const SignUp = ({ setIsAuthenticated }) => {

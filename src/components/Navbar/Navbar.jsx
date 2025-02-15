@@ -2,26 +2,26 @@
 import { Link, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import { useState, useEffect } from "react";
-import marketplaceLogo from "../assets/retailer.png";
+import marketplaceLogo from "../../assets/retailer.png";
 
 const Navbar = () => {
-  const [isActive, setIsActive] = useState(false);
+  const [isActiveOpen, setIsActiveOpen] = useState(false);
   const location = useLocation(); // Get current route
 
   const toggleHamburger = () => {
-    setIsActive(!isActive);
+    setIsActiveOpen(!isActiveOpen);
   };
 
   // Close navbar on scroll
   useEffect(() => {
     const handleScroll = () => {
-      if (isActive) {
-        setIsActive(false);
+      if (isActiveOpen) {
+        setIsActiveOpen(false);
       }
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isActive]);
+  }, [isActiveOpen]);
 
   // Function to handle scrolling for sections when on Home page
   const handleScrollToSection = (sectionId) => {
@@ -39,7 +39,7 @@ const Navbar = () => {
           <img src={marketplaceLogo} alt="Marketplace logo" />
           <h1>IGDTUW MARKETPLACE</h1>
         </div>
-        <ul id="navbar" className={`${isActive ? "active" : ""}`} onClick={toggleHamburger}>
+        <ul id="navbar" className={`${isActiveOpen ? "active" : ""}`} onClick={toggleHamburger}>
           <li>
             <Link className="a" to="/" onClick={() => handleScrollToSection("hero-section")}>
               Home
@@ -67,7 +67,7 @@ const Navbar = () => {
           </li>
         </ul>
 
-        <div className={`hamburger ${isActive ? "active" : ""}`} onClick={toggleHamburger}>
+        <div className={`hamburger ${isActiveOpen ? "active" : ""}`} onClick={toggleHamburger}>
           <div className="bar"></div>
           <div className="bar"></div>
           <div className="bar"></div>

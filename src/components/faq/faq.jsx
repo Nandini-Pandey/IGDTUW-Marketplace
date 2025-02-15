@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./faq.css";
-import faqimage from "../assets/FAQs-pana.png";
+import faqimage from "../../assets/FAQs-pana.png";
 
 const FaqSection = () => {
   const [activeIndex, setActiveIndex] = useState(null);

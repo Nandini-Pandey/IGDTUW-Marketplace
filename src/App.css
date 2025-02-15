@@ -4,7 +4,10 @@ body {
   font-family: 'Poppins', sans-serif;
   background-color: #bcceaf;
 }
-
+html, body{
+  width:100%;
+  overflow-x:hidden !important;
+}
 .App {
   overflow: hidden;
 }
