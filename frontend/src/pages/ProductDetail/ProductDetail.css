@@ -1,0 +1,115 @@
+/* Prevent Conflicts with Other Pages */
+body {
+    background: linear-gradient(235deg, #f8fff0, #f8fff1);
+  }
+  
+  /* Product Detail Container */
+  .product-detail__container {
+    display: flex;
+    align-items: center;
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+    margin-top: 80px;
+  }
+  
+  /* Image Box */
+  .product-detail__image {
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .product-detail__image img {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+  }
+  
+  /* Info Box */
+  .product-detail__info {
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .product-detail__info h1 {
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .product-detail__info p {
+    font-size: 16px;
+    margin: 5px 0;
+    color: #555;
+  }
+  
+  /* Seller Box */
+  .product-detail__seller {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  .product-detail__seller h3 {
+    font-size: 18px;
+    color: #222;
+  }
+  
+  /* Buttons */
+  .product-detail__actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+  }
+  
+  .product-detail__contact,
+  .product-detail__wishlist {
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: 0.3s;
+  }
+  
+  .product-detail__contact {
+    background-color: #7ee670;
+    color: white;
+  }
+  
+  .product-detail__wishlist {
+    background-color: #96ce6e;
+    color: white;
+  }
+  
+  .product-detail__contact:hover {
+    background-color: #65d026;
+  }
+  
+  .product-detail__wishlist:hover {
+    background-color: #65d026;
+  }
+  
+  /* Responsive Fix */
+  @media (min-width: 768px) {
+    .product-detail__container {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 30px;
+    }
+  
+    .product-detail__info {
+      text-align: left;
+    }
+  
+    .product-detail__actions {
+      justify-content: flex-start;
+    }
+  }
+  

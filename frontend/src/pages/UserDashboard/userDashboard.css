@@ -1,0 +1,247 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+  overflow: scroll;
+  max-width: 100vw;
+  /* height:100%; */
+}
+#main-div{
+  min-height:100dvh;
+  height:100%;
+}
+#dashboard{
+    display:flex;
+    flex-direction:column;
+    min-height: 100vh;
+    height:100%;
+    font-family: "Roboto", sans-serif;
+    max-width:100%;
+    /* min-width:100dvw; */
+    /* padding:50px 30px; */
+    background-color: #f9fff0;
+    /* overflow: scroll; */
+    padding-bottom:0 auto 40px;
+    margin-top:60px;
+
+}
+#dashboard .dashboard-container{
+    display:flex;
+    /* min-height: 100vh; */
+    /* font-family: "Roboto", sans-serif; */
+    width:100%;
+    padding:50px 30px;
+    /* background-color: #f9fff0; */
+}
+
+#sidebar-section{
+    width: 25%;
+    background-color: transparent;
+    padding: 72px 10px 10px 15px;
+    /* overflow: scroll; */
+}
+.dashboard-section{
+    width:75%;
+    background-color: transparent;
+    padding: 10px 15px 10px 10px;
+    display:flex;
+    flex-direction: column;
+    overflow: scroll;
+}
+
+
+/* styling sidebar */
+.sidebar{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    position:sticky !important;
+    top:90px;
+}
+
+
+.about .user-profile-image{
+    height:90px;
+    width: 90px;
+    border-radius:50%;
+    overflow: hidden;
+}
+.about .user-profile-image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.sidebar .about{
+    display:flex;
+    flex-direction: column;
+    gap:10px;
+}
+
+.sidebar .about h3{
+    font-size:1.4rem;
+    font-weight: 500;
+    color: #333;
+}
+
+/* .sidebar .about p{
+    font-size: 14px;
+    color:#858C97;
+    width:100%;
+} */
+
+.sidebar .about p {
+    font-size: 0.95rem;
+    color: #858C97;
+    word-wrap: break-word; 
+    overflow: hidden; 
+    white-space: normal;
+    width: 100%; 
+    padding:0 10px 0 0;
+}
+.sidebar .sidebar-list{
+    list-style-type: none;
+}
+
+.dashboard-links{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.dashboard-links div{
+    font-size:0.95rem;
+    color:#858C97;
+}
+.sidebar-list{
+    font-weight: 500;
+}
+
+.sidebar-list i{
+    color:#858C97;
+    font-size: 1.2rem;
+    margin-right:10px;
+}
+
+.sidebar-list li{
+    padding:8px 10px;
+    /* padding-left:10px; */
+    width:80%;
+    font-size:1.1rem;
+    margin-bottom:10px;
+    border:1px solid green;
+    border-radius:10px;
+    cursor: pointer;
+}
+
+.sidebar-list li:hover i, .sidebar-list li:hover{
+    background-color: rgb(66, 109, 66);
+    color:white;
+}
+
+.sidebar-list.dashboard-link-active li{
+    background-color: rgb(66, 109, 66);
+    color:white;
+}
+
+/* dashboard section css styling */
+
+#dashboard .dashboard-section .section-heading{
+    font-size: 2rem;
+    font-weight: 600;
+    color:#121519;
+    margin-bottom: 1.5rem;
+}
+
+/* Dashboard Hamburger Settings */
+
+.account-hamburger{
+   
+    display:none;
+    cursor: pointer;
+    background-color: rgb(66, 109, 66);
+    color:white;
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    padding:9px;
+}
+.bars {
+  background-color: rgb(255, 255, 255);
+  display: block;
+  width:1.8rem;
+  height: 0.1875rem;
+  margin: 0.3125rem auto;
+  transition: all 0.3s ease-in-out;
+}
+
+/* dealing  with responsiveness for dashboard section*/
+
+@media(max-width:1030px){
+  .account-hamburger{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    gap:10px;
+  }
+  #dashboard .dashboard-container{
+    padding: 20px 5px;
+  }
+  .dashboard-section{
+    width:100%;
+    padding: 5px;
+  }
+  .dashboard-section{
+    align-items: center;
+  }
+  /* .account-hamburger.opened .bars:nth-child(1) {
+    transform: translateY(0.5rem)rotate(45deg);
+  }
+  
+  .account-hamburger.opened .bars:nth-child(2) {
+    opacity:0;
+  }
+  
+  .account-hamburger.opened .bars:nth-child(3) {
+    transform:translateY(-0.5rem) rotate(-45deg);
+  } */
+  #dashboard #sidebar-section{
+    position:fixed;
+    max-width:300px;
+    width:80%;
+    min-height:100vh;
+    height:100%;
+    bottom:0;
+    top:0;
+    left:-200%;
+    z-index:200000;
+    background-color: white;
+    box-shadow: 30px 0px 30px 30px rgba(0, 0, 0, 0.2);
+    padding:20px;
+  }
+
+  #dashboard #sidebar-section.opened{
+    left:0;
+  } 
+  
+  #profile-container{
+    padding:15px 20px;
+  }
+  #profile-container .button-group button {
+    padding: 10px 14px;
+    /* font-size: 1rem; */
+  }
+  
+}
+
+@media(800px<width<960px){
+  #dashboard{
+    padding-top:30px;
+  }
+}
+
+
+

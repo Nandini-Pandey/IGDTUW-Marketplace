@@ -1,0 +1,150 @@
+/* General container */
+.signin-container {
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 40px 20px;
+  background: linear-gradient(235deg, #c6d9b3, #f8fff1);
+}
+
+/* Left Section */
+.signin-left {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  /* max-width: 50%; */
+  max-width:500px;
+  width:100%;
+}
+
+.signin-left img {
+  width:100%;
+  border-radius: 15%;
+}
+
+/* Right Section */
+.signin-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* max-width: 50%; */
+  max-width:500px;
+  width:100%;
+  padding: 20px;
+}
+
+/* Form Container */
+.signin-form-container {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.signin-form-container h2 {
+  color: black;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Input fields */
+.signin-form-container input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: rgb(220, 234, 217);
+  color: #1e3514;
+  /* font-size: 16px; */
+}
+.signup-form-container input ,label{
+  font-size: 1.1rem;
+}
+
+.signin-form-container input::placeholder {
+  color: #2e4e1f; /* Matches button style */
+}
+
+/* Button */
+.signin-form-container button {
+  width: 100%;
+  padding: 12px;
+  background-color: #2e4e1f;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.signin-form-container button:hover {
+  background-color: #1e3514;
+}
+
+/* Redirect section */
+.signin-redirect {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.signin-redirect p,
+.signin-redirect a {
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.signin-redirect a {
+  color: rgb(90, 211, 59);
+  text-decoration: none;
+}
+
+/* responsiveness*/
+@media (max-width: 900px) {
+  .signin-container {
+    flex-direction: column;
+  }
+  
+  /* .signin-left, .signin-right {
+    max-width: 100%;
+  }
+
+  .signin-left img {
+    width: 60%;
+    max-width: 250px;
+  }
+
+  .signin-form-container {
+    width: 90%;
+  } */
+}
+
+@media (max-width: 500px) {
+  .signin-form-container {
+    padding: 20px;
+  }
+/* 
+  .signin-left img {
+    width: 70%;
+  } */
+
+  .signin-redirect {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .signin-redirect p, .signin-redirect a {
+    padding: 5px;
+  }
+}

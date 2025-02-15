@@ -1,41 +1,47 @@
-import React from 'react';
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import './App.css';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Services from './components/Services';
-import Footer from './components/Footer';
-import SignUp from "./components/SignUp";
-import SignIn from "./components/SignIn";
-import Faq from "./components/faq";
-import Contact from "./components/Contact";
-import CompleteProfile from './components/completeProfile';
+import Navbar from "./components/Navbar/Navbar";
+import NewNavbar from "./components/newNavbar/newNavbar";
+import SignUp from "./pages/SignUp/SignUp";
+import SignIn from "./pages/SignIn/SignIn";
+import Faq from "./components/faq/faq";
+import Contact from "./components/Contact/Contact";
+import CompleteProfile from './pages/CompleteProfile/completeProfile';
+import CategoryPage from "./pages/CategoryPage/CategoryPage";
+import ProductDetail from './pages/ProductDetail/ProductDetail';
+import UserDashboard from './pages/UserDashboard/userDashboard';
+import ProductUpload from './pages/ProductUpload/productUpload';
+import { auth } from "./firebaseConfig"; 
+import { onAuthStateChanged } from "firebase/auth"; 
 
-// import NewNavbar from "./components/newNavbar";
-
-
+import LandingPage from "./pages/LandingPage"; 
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsAuthenticated(!!user);
+    });
+    return () => unsubscribe();
+  }, []);
+
   return (
     <div className="App">
       <Router>
-        <Navbar />
+        {isAuthenticated ? <NewNavbar setIsAuthenticated={setIsAuthenticated} /> : <Navbar />}
         <Routes>
-          <Route path="/" element={
-            <>
-              <Hero />
-              <Services />
-              <Faq />
-              <Contact />
-              <Footer />
-            </>
-          } />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/signin" element={<SignIn />} />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/category" element={<CategoryPage />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/signup" element={<SignUp setIsAuthenticated={setIsAuthenticated} />} />
+          <Route path="/signin" element={<SignIn setIsAuthenticated={setIsAuthenticated} />} />
           <Route path="/faq" element={<Faq />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/complete-profile" element={<CompleteProfile />} />
+          <Route path="/dashboard" element={<UserDashboard />} />
+          <Route path="/product-upload" element={<ProductUpload />} />
           <Route path="*" element={<div>Page Not Found</div>} />
         </Routes>
       </Router>
