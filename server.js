@@ -6,14 +6,34 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 
 dotenv.config();
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175'],
+    origin: [
+        'http://localhost:5173',
+        'http://localhost:5174',
+        'http://localhost:5175',
+        'http://127.0.0.1:5173',
+        'http://127.0.0.1:5174',
+        'http://127.0.0.1:5175'
+    ],
     credentials: true
 }));
+
+// MongoDB Connection Options
+const mongoOptions = {
+    retryWrites: true,
+    w: 'majority',
+    ssl: true,
+    tls: true,
+    tlsAllowInvalidCertificates: true,
+    serverSelectionTimeoutMS: 5000,
+    socketTimeoutMS: 45000,
+    family: 4
+};
 
 // Schemas
 const userSchema = new mongoose.Schema({
@@ -33,36 +53,42 @@ const productSchema = new mongoose.Schema({
     img: { type: String, required: true }
 });
 
-// Initialize models
 let User, Product;
+let isConnected = false;
 
-// Connect to MongoDB
-const connectToMongoDB = async () => {
+const connectDB = async () => {
     try {
-        // Connect to MongoDB
-        console.log('Connecting to MongoDB...');
-        await mongoose.connect(process.env.MONGO_URI, {
-            tls: true,
-            tlsAllowInvalidCertificates: true
-        });
+        if (isConnected) {
+            console.log('Using existing database connection');
+            return;
+        }
 
-        // Initialize models
-        User = mongoose.model('User', userSchema);
-        Product = mongoose.model('Product', productSchema);
+        console.log('Connecting to User Database...');
+        const userDB = await mongoose.createConnection(process.env.MONGO_URI_USER, mongoOptions);
         
-        console.log('MongoDB connection established successfully');
-        return true;
+        console.log('Connecting to Product Database...');
+        const productDB = await mongoose.createConnection(process.env.MONGO_URI_PRODUCT, mongoOptions);
+        
+        User = userDB.model('User', userSchema);
+        Product = productDB.model('Product', productSchema);
+        isConnected = true;
+        console.log('MongoDB connections established successfully');
     } catch (error) {
         console.error('MongoDB connection error:', error);
-        return false;
+        isConnected = false;
+        // Try to reconnect after 5 seconds
+        setTimeout(connectDB, 5000);
     }
 };
+
+// Connect to MongoDB
+connectDB();
 
 // API Routes
 app.get('/api/products', async (req, res) => {
     try {
-        if (!Product) {
-            throw new Error('Product model not initialized');
+        if (!isConnected) {
+            await connectDB();
         }
         const products = await Product.find();
         console.log(`Found ${products.length} products`);
@@ -75,8 +101,8 @@ app.get('/api/products', async (req, res) => {
 
 app.post('/signup', async (req, res) => {
     try {
-        if (!User) {
-            throw new Error('User model not initialized');
+        if (!isConnected) {
+            await connectDB();
         }
         const { name, email, password } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -91,8 +117,8 @@ app.post('/signup', async (req, res) => {
 
 app.post('/signin', async (req, res) => {
     try {
-        if (!User) {
-            throw new Error('User model not initialized');
+        if (!isConnected) {
+            await connectDB();
         }
         const { email, password } = req.body;
         const user = await User.findOne({ email });
@@ -117,50 +143,9 @@ app.get('/', (req, res) => {
 });
 
 // Start server
-const startServer = async () => {
-    let currentPort = PORT;
-    const maxRetries = 10;
-
-    for (let i = 0; i < maxRetries; i++) {
-        try {
-            // First connect to MongoDB
-            const isConnected = await connectToMongoDB();
-            if (!isConnected) {
-                throw new Error('Failed to connect to MongoDB');
-            }
-
-            // Then start the server
-            await new Promise((resolve, reject) => {
-                const server = app.listen(currentPort, () => {
-                    console.log(`Server running on port ${currentPort}`);
-                    resolve();
-                });
-
-                server.on('error', (error) => {
-                    if (error.code === 'EADDRINUSE') {
-                        console.log(`Port ${currentPort} is busy, trying ${currentPort + 1}`);
-                        currentPort++;
-                        server.close();
-                        reject(new Error('Port in use'));
-                    } else {
-                        reject(error);
-                    }
-                });
-            });
-            
-            // If we get here, server started successfully
-            break;
-        } catch (error) {
-            console.error(`Attempt ${i + 1} failed:`, error.message);
-            if (i === maxRetries - 1) {
-                console.error('Max retries reached. Exiting...');
-                process.exit(1);
-            }
-            // Wait before retrying
-            await new Promise(resolve => setTimeout(resolve, 1000));
-        }
-    }
-};
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
 
 // Handle process errors
 process.on('uncaughtException', (error) => {
@@ -172,5 +157,3 @@ process.on('unhandledRejection', (error) => {
     console.error('Unhandled Rejection:', error);
     process.exit(1);
 });
-
-startServer();
