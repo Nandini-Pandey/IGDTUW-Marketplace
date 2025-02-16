@@ -2,6 +2,7 @@
 body {
     background: linear-gradient(235deg, #f8fff0, #f8fff1);
   }
+
   
   /* Product Detail Container */
   .product-detail__container {
@@ -150,11 +151,13 @@ body {
   
   /* Responsive Fix */
   @media (max-width: 768px) {
+    .product-details-section{
+        margin-top:80px;
+    }    
     .product-detail__container {
       flex-direction: column;
       padding: 1rem;
       margin: 1rem;
-      padding-top:80px;
     }
   
     .product-detail__image {
