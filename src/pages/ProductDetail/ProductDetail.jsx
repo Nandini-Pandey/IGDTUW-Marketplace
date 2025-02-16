@@ -67,7 +67,7 @@ const ProductDetail = () => {
   const randomYear = years[Math.floor(Math.random() * years.length)];
 
   return (
-    <div>
+    <div className="product-details-section">
       <NewNavbar />
       <div className="product-detail__container">
         <div className="product-detail__image">
