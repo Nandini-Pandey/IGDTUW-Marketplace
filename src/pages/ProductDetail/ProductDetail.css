@@ -7,7 +7,7 @@ body {
   /* Product Detail Container */
   .product-detail__container {
     max-width: 1000px;
-    margin: 8rem auto;
+    margin: 8rem auto !important;
     padding: 2rem;
     display: flex;
     gap: 3rem;
@@ -155,8 +155,8 @@ body {
     .product-detail__container {
       flex-direction: column;
       padding: 1rem;
-      margin-left: 1rem;
-      margin-right: 1rem; 
+      margin-left: 1rem !important;
+      margin-right: 1rem !important; 
     }
   
     .product-detail__image {
