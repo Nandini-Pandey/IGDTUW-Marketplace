@@ -151,13 +151,12 @@ body {
   
   /* Responsive Fix */
   @media (max-width: 768px) {
-    .product-details-section{
-        margin-top:80px;
-    }    
+     
     .product-detail__container {
       flex-direction: column;
       padding: 1rem;
-      margin: 1rem;
+      margin-left: 1rem;
+      margin-right: 1rem; 
     }
   
     .product-detail__image {
