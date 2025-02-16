@@ -154,6 +154,7 @@ body {
       flex-direction: column;
       padding: 1rem;
       margin: 1rem;
+      padding-top:2rem;
     }
   
     .product-detail__image {
