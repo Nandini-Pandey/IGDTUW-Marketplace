@@ -3,7 +3,7 @@ import { Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import "bootstrap-icons/font/bootstrap-icons.css";
-import "./Breadcrumbs.css";
+import "./BreadCrumbs.css";
 
 const Breadcrumbs = ({ productName, productCategory }) => {
     return (
