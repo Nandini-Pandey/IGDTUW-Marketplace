@@ -33,6 +33,7 @@ function App() {
         {isAuthenticated ? <NewNavbar setIsAuthenticated={setIsAuthenticated} /> : <Navbar />}
         <Routes>
           <Route path="/" element={<LandingPage />} />
+         <Route path="/category/:categoryName" element={<CategoryPage />} />
           <Route path="/category" element={<CategoryPage />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/signup" element={<SignUp setIsAuthenticated={setIsAuthenticated} />} />
