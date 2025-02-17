@@ -1,9 +1,13 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import './CategoryPage.css';
 import NewNavbar from '../../components/newNavbar/newNavbar';
-import { Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import { products } from '../../data/products';
+import Breadcrumbs from '../../components/BreadCrumb/BreadCrumbs';
 
 const CategoryPage = () => {
+  const { categoryName } = useParams(); // Get category from URL
+
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedAccommodation, setSelectedAccommodation] = useState('All');
@@ -56,6 +60,12 @@ const CategoryPage = () => {
   useEffect(() => {
     fetchProducts();
   }, []);
+
+  useEffect(() => {
+    if (categoryName) {
+      setSelectedCategory(decodeURIComponent(categoryName)); // Convert back to normal text
+    }
+  }, [categoryName]);
 
   const filteredProducts = useMemo(() => {
     console.log('Filtering products:', products);
@@ -156,6 +166,10 @@ const CategoryPage = () => {
   return (
     <div className="page-container">
       <NewNavbar />
+
+      {/* Breadcrumbs for navigation */}
+      <Breadcrumbs productCategory={selectedCategory} />
+
       <div className="controls-container">
         <div className="search-bar-container">
           <div className="search-bar">
