@@ -11,7 +11,7 @@
     flex-direction: column;
     gap: 40px;
     box-sizing: border-box;
-    font-family: "Roboto", serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .product {
@@ -106,7 +106,12 @@
 }
 
 
+.prd-img input {
+    width: 300px;
+}
+
 /* category */
+
 
 .prd-category h2 {
     color: olivedrab;
@@ -116,7 +121,7 @@
 
 .prd-sub-catg {
     height: 90px;
-    width: 450px;
+    width: 350px;
     border: 1px solid rgba(128, 128, 128, 0.533);
     border-radius: 10px;
     padding-left: 15px;
@@ -131,25 +136,35 @@
     /* padding-bottom: 15px; */
 }
 
-.prd-inp-cat input {
+.prd-inp-cat select {
     padding-left: 15px;
     padding-bottom: 10px;
     padding-top: 5px;
     border: 1px solid rgba(128, 128, 128, 0.578);
     border-radius: 5px;
     height: 35px;
-    width: 400px;
+    width: 300px;
     padding: 5px;
+    /* color: rgba(0, 0, 0, 0.6); */
+    font-size: 16px;
+    color: rgb(48, 74, 37);
+    background-color: rgb(220, 234, 217);
     transition: border 0.2s ease, box-shadow 0.3s ease;
 }
 
-.prd-inp-cat input:focus {
+.prd-inp-cat select:focus {
+    border-color: green;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* .prd-inp-cat input:focus {
     border-color: #256429;
     color: black;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
     outline: none;
     border-bottom: 2px solid #256429d8;
-}
+} */
 
 /* price*/
 .prd-price h2 {
@@ -207,10 +222,14 @@
 .update,
 .list {
     background-color: rgba(91, 128, 45, 0.871);
-    width: 160px;
+    width: 150px;
+
+    color: white;
+    height: 40px;
 
     border-radius: 20px;
-    /* font-size: 18px; */
+    font-size: 15px;
+
     /* font-weight: bold; */
     /* letter-spacing: 0.9px; */
 }
@@ -223,7 +242,36 @@
 }
 
 
-@media(1000px >=width > 900px) {
+@media (min-width: 1186px) and (max-width: 1341px) {
+
+    .product {
+        padding-left: 200px;
+    }
+
+}
+
+@media (min-width: 1064px) and (max-width: 1186px) {
+
+    .product {
+        padding-left: 150px;
+    }
+
+}
+
+@media (max-width: 1064px) {
+
+    .product {
+        padding-left: 100px;
+    }
+
+}
+
+
+@media (min-width: 900px) and (max-width: 1000px) {
+    .product {
+        margin-top: 60px;
+    }
+
     .productUpload {
         padding: 50px;
         padding-top: 80px;
@@ -233,7 +281,7 @@
 
     .product {
         /* padding-bottom: 20px; */
-        padding-left: 50px;
+        padding-left: 30px;
         /* margin-left: 10px; */
     }
 
@@ -250,7 +298,7 @@
     }
 }
 
-@media(700px < width <=900px) {
+@media (min-width: 777px) and (max-width: 900px) {
 
     .productUpload {
         /* margin-top: 60px; */
@@ -260,11 +308,12 @@
     }
 
     .product {
-
         gap: 60px;
         padding: 0px;
         /* padding-bottom: 20px; */
-        padding-left: 40px;
+        padding-left: 35px;
+
+        margin-top: 70px;
     }
 
     .prd-sub-descr,
@@ -274,7 +323,7 @@
 
     .prd-name input,
     .prd-details textarea,
-    .prd-inp-cat input {
+    .prd-inp-cat {
         width: 300px;
     }
 
@@ -307,7 +356,7 @@
 
 }
 
-@media (500px <width <=700px) {
+@media (min-width: 500px) and (max-width: 776px) {
 
     .productUpload {
         padding: 100px;
@@ -347,7 +396,7 @@
         flex-direction: column;
         display: flex;
         /* letter-spacing: 10px; */
-        padding-left: 40px;
+        padding-left: 20px;
         /* padding-bottom: 30px; */
         margin-bottom: 30px;
     }
