@@ -20,7 +20,7 @@ app.use(cors());
 
 app.use(express.urlencoded({extended: true}))
 console.log("khfkh:", MONGO_URI);
-mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.error("MongoDB Connection Error:", err));
 

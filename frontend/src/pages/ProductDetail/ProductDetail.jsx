@@ -1,6 +1,5 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import { products } from "../../data/products";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import NewNavbar from "../../components/newNavbar/newNavbar";
 import "./ProductDetail.css";
 
@@ -9,10 +8,58 @@ const years = ["1st Year", "2nd Year", "3rd Year", "4th Year"];
 
 const ProductDetail = () => {
   const { id } = useParams();
-  const product = products.find((p) => p.id.toString() === id);
+  const navigate = useNavigate();
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  if (!product) {
-    return <h2>Product not found!</h2>;
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        setLoading(true);
+        const API_URL = import.meta.env.DEV ? 'http://localhost:3000' : '';
+        const response = await fetch(`${API_URL}/api/products/${id}`);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setProduct(data);
+      } catch (err) {
+        console.error('Error fetching product:', err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div>
+        <NewNavbar />
+        <div className="loading-container">
+          <h2>Loading product details...</h2>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !product) {
+    return (
+      <div>
+        <NewNavbar />
+        <div className="error-container">
+          <h2>{error || 'Product not found!'}</h2>
+          <button onClick={() => navigate(-1)} className="back-button">
+            Go Back
+          </button>
+        </div>
+      </div>
+    );
   }
 
   // Generate random seller info
@@ -20,9 +67,8 @@ const ProductDetail = () => {
   const randomYear = years[Math.floor(Math.random() * years.length)];
 
   return (
-    <div>
+    <div className="product-details-section">
       <NewNavbar />
-
       <div className="product-detail__container">
         <div className="product-detail__image">
           <img src={product.img} alt={product.name} />
@@ -30,9 +76,14 @@ const ProductDetail = () => {
 
         <div className="product-detail__info">
           <h1>{product.name}</h1>
+          <p><strong>Category:</strong> {product.category}</p>
+          <p><strong>Accommodation Type:</strong> {product.accommodationType}</p>
+          <p><strong>Year:</strong> {product.year}</p>
           <p><strong>Condition:</strong> {product.condition}</p>
           <p><strong>Description:</strong> {product.description}</p>
-          <p><strong>Price:</strong> ₹{product.price.toLocaleString("en-IN")}</p>
+          <p className="product-detail__price">
+            <strong>Price:</strong> ₹{product.price.toLocaleString("en-IN")}
+          </p>
 
           <div className="product-detail__seller">
             <h3>Seller Information</h3>
@@ -43,6 +94,9 @@ const ProductDetail = () => {
           <div className="product-detail__actions">
             <button className="product-detail__contact">Contact Seller</button>
             <button className="product-detail__wishlist">Add to Wishlist</button>
+            <button onClick={() => navigate(-1)} className="product-detail__back">
+              Back to Products
+            </button>
           </div>
         </div>
       </div>
