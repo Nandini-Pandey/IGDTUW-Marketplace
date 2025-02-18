@@ -55,14 +55,14 @@ const Navbar = () => {
               Contact us
             </Link>
           </li>
-          <li>
+          {/* <li>
             <button className="logout">
               <Link className="signing" to="/signin">Sign In</Link>
             </button>
-          </li>
+          </li> */}
           <li>
             <button className="logout">
-              <Link className="signing" to="/signup">Sign Up</Link>
+              <Link className="signing" to="/signup">Sign Up / Sign In</Link>
             </button>
           </li>
         </ul>
