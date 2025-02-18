@@ -21,7 +21,7 @@ const Profile = () => {
                     return;
                 }
 
-                const response = await fetch(`http://localhost:5000/userinfo?userId=${userId}`);
+                const response = await fetch(`https://marketplace-backend-x2xl.onrender.com/userinfo?userId=${userId}`);
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
@@ -51,7 +51,7 @@ const Profile = () => {
 
     const handleSave = async () => {
         try {
-            const response = await fetch("http://localhost:5000/userinfo", {
+            const response = await fetch("https://marketplace-backend-x2xl.onrender.com/userinfo", {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),

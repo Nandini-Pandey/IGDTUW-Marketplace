@@ -36,7 +36,7 @@ function App() {
          <Route path="/category/:categoryName" element={<CategoryPage />} />
           <Route path="/category" element={<CategoryPage />} />
           <Route path="/product/:id" element={<ProductDetail />} />
-          {/* <Route path="/signup" element={<SignUp setIsAuthenticated={setIsAuthenticated} />} /> */}
+          <Route path="/signup" element={<SignUp setIsAuthenticated={setIsAuthenticated} />} />
           <Route path="/signin" element={<SignIn setIsAuthenticated={setIsAuthenticated} />} />
           <Route path="/faq" element={<Faq />} />
           <Route path="/contact" element={<Contact />} />
