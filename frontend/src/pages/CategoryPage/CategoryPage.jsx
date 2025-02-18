@@ -28,7 +28,7 @@ const CategoryPage = () => {
       
       // Use the full URL when in development
       const API_URL = import.meta.env.DEV ? 'http://localhost:5000' : '';
-      const response = await fetch(`${API_URL}/api/products`, {
+      const response = await fetch(`${API_URL}/products`, {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'

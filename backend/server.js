@@ -30,8 +30,8 @@ app.get("/", (req, res) => {
 const productSchema = new mongoose.Schema({
     name: { type: String, required: true },
     category: { type: String, required: true },
-    accommodationType: { type: String, required: true },
-    year: { type: String, required: true },
+    accommodationType: { type: String },
+    year: { type: String },
     condition: { type: String, required: true },
     price: { type: Number, required: true },
     description: { type: String, required: true },
@@ -40,11 +40,32 @@ const productSchema = new mongoose.Schema({
 
 const Product = mongoose.model('Products', productSchema);
 
+//Upload Product 
+app.post('/products', async (req, res) => {
+    try {
+        const { name, category, accommodationType, year, condition, price, description, img } = req.body;
+        console.log("Received user details:", req.body);
+
+        if (!name || !category || !condition || !price || !description || !img) {
+            return res.status(400).json({ error: 'Missing required fields' });
+        }
+
+        const newProduct = new Product(req.body);
+
+        await newProduct.save();
+
+        res.status(201).json({ success: true, message: 'Product uploaded successfully', product: newProduct });
+    } catch (error) {
+        console.error('Error uploading product:', error);
+        res.status(500).json({ error: 'Failed to upload product' });
+    }
+});
+
 // Fetch All Product
-app.get('/api/products', async (req, res) => {
+app.get('/products', async (req, res) => {
    try {
        const products = await Product.find();
-       console.log('Fetched products:', products);  // More verbose logging
+    // console.log('Fetched products:', products);  More verbose logging
        res.json(products);
    } catch (error) {
        console.error('Error fetching products:', error);
@@ -53,9 +74,9 @@ app.get('/api/products', async (req, res) => {
 });
 
 //Fetch filtered products
-app.get('/api/products/:id', async (req, res) => {
+app.get('/products/:id', async (req, res) => {
     try {
-        console.log('Fetching product with ID:', req.params.id);
+        // console.log('Fetching product with ID:', req.params.id);
         if (mongoose.connection.readyState !== 1) throw new Error('MongoDB not connected');
 
         const product = await Product.findById(req.params.id);
@@ -158,10 +179,9 @@ app.get('/userinfo', async (req, res) => {
     }
 });
 
-//Update details 
 // Update user information
 app.put('/userinfo', async (req, res) => {
-    try {
+    try { 
         const { userId, name, phoneNo, branch, graduationYear, accommodation } = req.body;
 
         if (!userId) {

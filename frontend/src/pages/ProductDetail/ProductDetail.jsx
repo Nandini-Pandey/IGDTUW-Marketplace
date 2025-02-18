@@ -17,8 +17,8 @@ const ProductDetail = () => {
     const fetchProduct = async () => {
       try {
         setLoading(true);
-        const API_URL = import.meta.env.DEV ? 'http://localhost:3000' : '';
-        const response = await fetch(`${API_URL}/api/products/${id}`);
+        const API_URL = import.meta.env.DEV ? 'http://localhost:5000' : '';
+        const response = await fetch(`${API_URL}/products/${id}`);
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
