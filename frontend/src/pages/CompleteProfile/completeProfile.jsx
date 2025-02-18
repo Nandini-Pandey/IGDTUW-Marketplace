@@ -44,7 +44,7 @@ const CompleteProfile = () => {
 
     const AddUser = async () => {
         console.log(userDetails)
-        const response = await fetch("http://localhost:5000/userinfo", {
+        const response = await fetch("https://marketplace-backend-x2xl.onrender.com/userinfo", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

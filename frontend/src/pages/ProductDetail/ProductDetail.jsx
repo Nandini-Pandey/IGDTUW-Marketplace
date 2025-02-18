@@ -17,7 +17,7 @@ const ProductDetail = () => {
     const fetchProduct = async () => {
       try {
         setLoading(true);
-        const API_URL = import.meta.env.DEV ? 'http://localhost:5000' : '';
+        const API_URL = import.meta.env.DEV ? 'https://marketplace-backend-x2xl.onrender.com' : '';
         const response = await fetch(`${API_URL}/products/${id}`);
 
         if (!response.ok) {
