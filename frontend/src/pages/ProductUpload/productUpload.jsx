@@ -33,11 +33,6 @@ const ProductUpload = ({ }) => {
                 </div>
 
                 <div className="prd-img">
-
-                    {/* <h2>Product Image</h2>
-                    <div className="prd-sub-img">
-                        <img src={product.image} alt="" />
-                    </div> */}
                     <h2>Upload Product Image</h2>
 
                     {/* Image Upload Input */}

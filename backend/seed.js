@@ -297,24 +297,19 @@ const products = [
 const seedDatabase = async () => {
     let connection;
     try {
-        console.log('Starting database seeding...');
-        console.log('Using MongoDB URI:', process.env.MONGO_URI_PRODUCT);
+        console.log('Starting database seeding');
         
-        connection = await mongoose.connect(process.env.MONGO_URI_PRODUCT, mongoOptions);
-        console.log('Connected to MongoDB:', connection.connection.name);
+        connection = await mongoose.connect(process.env.MONGO_URI, mongoOptions);
+        // console.log('Connected to MongoDB:', connection.connection.name);
         console.log('Connection state:', mongoose.connection.readyState);
 
         const Product = mongoose.model('Product', productSchema);
 
         // Clear existing products
-        console.log('Clearing existing products...');
         const deleteResult = await Product.deleteMany({});
-        console.log('Cleared products:', deleteResult);
 
         // Insert new products
-        console.log('Inserting new products...');
         const insertResult = await Product.insertMany(products);
-        console.log('Inserted products:', insertResult.length);
 
         // Verify the insertion
         const count = await Product.countDocuments();
@@ -322,7 +317,6 @@ const seedDatabase = async () => {
         
         // Log a sample product
         const sampleProduct = await Product.findOne();
-        console.log('Sample product:', JSON.stringify(sampleProduct, null, 2));
 
         console.log('Database seeded successfully!');
     } catch (error) {

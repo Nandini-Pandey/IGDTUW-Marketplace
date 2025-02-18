@@ -15,30 +15,58 @@ const Profile = () => {
     useEffect(() => {
         const fetchUserProfile = async () => {
             try {
-                const userId = localStorage.getItem("userId"); // Retrieve from localStorage
-                console.log(userId);
+                const userId = localStorage.getItem("userId");
                 if (!userId) {
                     console.error("User not logged in");
                     return;
                 }
-    
+
                 const response = await fetch(`http://localhost:5000/userinfo?userId=${userId}`);
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
-    
+
                 const data = await response.json();
                 setFormData(data);
             } catch (error) {
                 console.error("Error fetching profile:", error);
             }
         };
-    
+
         fetchUserProfile();
     }, []);
-    
+
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleEdit = () => {
+        setIsEditing(true);
+    };
+
+    const handleCancel = () => {
+        setIsEditing(false);
+        window.location.reload(); // Reload to reset changes
+    };
+
+    const handleSave = async () => {
+        try {
+            const response = await fetch("http://localhost:5000/userinfo", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error updating profile: ${response.status}`);
+            }
+
+            setIsEditing(false);
+            alert("Profile updated successfully!");
+        } catch (error) {
+            console.error("Error updating profile:", error);
+            alert("Failed to update profile.");
+        }
     };
 
     return (
@@ -96,14 +124,17 @@ const Profile = () => {
                             required
                         >
                             <option value="" disabled>Select your Branch</option>
-                            <option value="cse">CSE</option>
-                            <option value="cse-ai">CSE-AI</option>
-                            <option value="ece">ECE</option>
-                            <option value="ece-ai">ECE-AI</option>
-                            <option value="it">IT</option>
-                            <option value="ai-ml">AI-ML</option>
-                            <option value="mae">MAE</option>
-                            <option value="barch">Architecture</option>
+                                <option value="cse">CSE</option>
+                                <option value="cse-ai">CSE-AI</option>
+                                <option value="ece">ECE</option>
+                                <option value="ece-ai">ECE-AI</option>
+                                <option value="it">IT</option>
+                                <option value="ai-ml">AI-ML</option>
+                                <option value="mae">MAE/DMAM</option>
+                                <option value="bba">BBA</option>
+                                <option value="bca">BCA</option>
+                                <option value="mca">MCA</option>
+                                <option value="barch">Architecture</option>
                         </select>
                     ) : (
                         <p>{formData.branch.toUpperCase()}</p>
@@ -128,7 +159,7 @@ const Profile = () => {
                             <option value="2029">2029</option>
                         </select>
                     ) : (
-                        <p>Graduation Year: {formData.graduationYear}</p>
+                        <p>{formData.graduationYear}</p>
                     )}
                 </div>
 
@@ -160,6 +191,19 @@ const Profile = () => {
                                 />
                                 <label htmlFor="day-scholar">Day Scholar</label>
                             </div>
+                            <div className="radio-group">
+                                <input
+                                    type="radio"
+                                    id="pg"
+                                    name="accommodation"
+                                    value="pg"
+                                    checked={formData.accommodation === "pg"}
+                                    onChange={handleChange}
+                                    required
+                                />
+
+                                <label htmlFor="pg">PG</label>
+                            </div>
                         </div>
                     ) : (
                         <p>{formData.accommodation === "hostel" ? "Hosteller" : "Day Scholar"}</p>
@@ -174,7 +218,7 @@ const Profile = () => {
                 </div>
             ) : (
                 <div className="button-group">
-                    <button>Edit Profile</button>
+                    <button onClick={handleEdit}>Edit Profile</button>
                 </div>
             )}
         </div>

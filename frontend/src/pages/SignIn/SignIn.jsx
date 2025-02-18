@@ -16,7 +16,6 @@ const SignIn = ({ setIsAuthenticated }) => {
     e.preventDefault(); // Prevent page reload
 
     try {
-      localStorage.setItem("userId", email);
       await signInWithEmailAndPassword(auth, email, password);
       alert("Logged in successfully!");
       setIsAuthenticated(true); // Update navbar state

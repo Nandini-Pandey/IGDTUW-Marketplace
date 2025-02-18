@@ -3,48 +3,28 @@ require('dotenv').config(); // Load .env file
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const cors = require('cors');
-const path = require('path');
-
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
-const MONGO_URI_PRODUCT = process.env.MONGO_URI_PRODUCT;
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
-// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-// MongoDB Connection (Product Database)[Pragiti wala]
-// mongoose.connect(MONGO_URI_PRODUCT, {
-//     retryWrites: true,
-//     w: 'majority',
-//     serverSelectionTimeoutMS: 30000,
-//     socketTimeoutMS: 75000,
-//     family: 4,
-//     dbName: 'UserDetails'
-// }).on('connected', () => console.log("MongoDB (Product Database) Connected"))
-// .on('error', (err) => console.error("MongoDB Product Connection Error:", err));
-
-// MongoDB Connection (User Database)
+// MongoDB Connection:
 mongoose.connect(MONGO_URI, {
     retryWrites: true,
     w: 'majority',
     serverSelectionTimeoutMS: 30000,
     socketTimeoutMS: 75000,
     family: 4,
-    dbName: 'UserDetails'
+    dbName: 'UserDetails' //db name 
 }).then(() => console.log("MongoDB Connected"))
 .catch(err => console.error("MongoDB User Connection Error:", err));
 
 app.get("/", (req, res) => {
-    res.send("Server is running");
+    res.send("Server is running"); 
 });
-
-//Pragiti's code--
 
 // Product Schema
 const productSchema = new mongoose.Schema({
@@ -72,6 +52,7 @@ app.get('/api/products', async (req, res) => {
    }
 });
 
+//Fetch filtered products
 app.get('/api/products/:id', async (req, res) => {
     try {
         console.log('Fetching product with ID:', req.params.id);
@@ -86,8 +67,6 @@ app.get('/api/products/:id', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
-
-// app.get('*', (req, res) => res.sendFile('/index.html', { root: '.' }));
 
 // Global Uncaught Exception Handling
 process.on('uncaughtException', (error) => {
@@ -156,9 +135,9 @@ app.post('/userinfo', async (req, res) => {
         console.error("Error saving user:", error);
         res.status(500).json({ success: false, message: "Error saving user" });
     }
-});
+}); 
 
-// Get User Info by ID
+// Fetch on Dashboard
 app.get('/userinfo', async (req, res) => {
     try {
         const { userId } = req.query;
@@ -178,3 +157,31 @@ app.get('/userinfo', async (req, res) => {
         res.status(500).json({ success: false, message: "Internal server error" });
     }
 });
+
+//Update details 
+// Update user information
+app.put('/userinfo', async (req, res) => {
+    try {
+        const { userId, name, phoneNo, branch, graduationYear, accommodation } = req.body;
+
+        if (!userId) {
+            return res.status(400).json({ success: false, message: "User ID is required" });
+        }
+
+        const updatedUser = await User.findOneAndUpdate(
+            { userId },
+            { name, phoneNo, branch, graduationYear, accommodation },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        res.json({ success: true, message: "Profile updated", user: updatedUser });
+    } catch (error) {
+        console.error("Error updating user:", error);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
+});
+

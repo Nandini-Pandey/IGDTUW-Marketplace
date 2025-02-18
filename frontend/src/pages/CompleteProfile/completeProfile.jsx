@@ -55,10 +55,11 @@ const CompleteProfile = () => {
 
         if (response.ok) {
             console.log(data.message); // Success message
+            alert("Details logged successfully");
         } else {
             console.log("Failed to save profile: " + data.error);
+            // alert("sdflkn")
         }
-        alert("Details logged successfully");
         navigate("/"); // Redirect 
     };
     

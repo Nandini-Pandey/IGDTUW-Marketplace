@@ -25,6 +25,7 @@ const SignUp = ({ setIsAuthenticated }) => {
 
       // Now check if the user is authenticated
       onAuthStateChanged(auth, (currentUser) => {
+        localStorage.setItem("userId", user.email);
         if (currentUser) {
           // If the user is authenticated, check if it's a new or existing user
           if (currentUser.metadata.creationTime === currentUser.metadata.lastSignInTime) {
