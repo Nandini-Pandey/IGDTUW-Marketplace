@@ -123,7 +123,7 @@
 @media (max-width: 900px) {
   .signup-container {
     flex-direction: column;
-    margin-top: 90px;
+    padding-top: 90px;
   }
   
   /* .signup-left, .signup-right {
