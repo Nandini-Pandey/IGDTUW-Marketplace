@@ -61,7 +61,6 @@ const ProductUpload = () => {
             <div className="product">
                 {/* Product Description */}
                 <div className="prd-desc">
-                    <h2>Description</h2>
                     <div className="prd-sub-descr">
                         <h2>Product Name</h2>
                         <div className="prd-name">
@@ -101,7 +100,6 @@ const ProductUpload = () => {
 
                 {/* Product Category */}
                 <div className="prd-category">
-                    <h2>Category</h2>
                     <div className="prd-sub-catg">
                         <h2>Product Category</h2>
                         <div className="prd-inp-cat">
@@ -156,7 +154,6 @@ const ProductUpload = () => {
 
                 {/* Product Price */}
                 <div className="prd-price">
-                    <h2>Price</h2>
                     <div className="prd-sub-price">
                         <h2>Product Price</h2>
                         <div className="prd-inp-price">
