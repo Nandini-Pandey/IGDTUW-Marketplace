@@ -19,6 +19,31 @@
   .buy-now-button:hover {
     background-color: #218838;
   }
+
+  .loading, .error {
+    padding-top:120px;
+  }
+
+  .no-products{
+    padding-top: 120px;
+    text-align: center;
+    font-size: 1.5rem;
+    color: #4a5568;
+  }
+
+  .no-products button{
+    background-color: #14390f;
+    border:none;
+    color: white;
+    padding: 10px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin: 5px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 1rem;
+    cursor: pointer;
+  }
   /* General Styles */
   /* Ensure full width for the page container */
   .page-container {
@@ -39,7 +64,7 @@
   width: 100%;
   max-width: 1200px;
   margin: 20px auto;
-  margin-top:100px;
+  margin-top:50px;
   }
   
   .filter-sort-controls {
