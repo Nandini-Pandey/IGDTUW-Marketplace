@@ -11,7 +11,7 @@ const CategoryPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedAccommodation, setSelectedAccommodation] = useState('All');
-  const [selectedYear, setSelectedYear] = useState('All'); 
+  const [selectedYear, setSelectedYear] = useState('All');
   const [selectedCondition, setSelectedCondition] = useState('All');
   const [sortBy, setSortBy] = useState('name-asc');
   const [currentPage, setCurrentPage] = useState(1);
@@ -25,7 +25,7 @@ const CategoryPage = () => {
       setIsLoading(true);
       setError(null);
       console.log('Fetching products...');
-      
+
       // Use the full URL when in development
       const API_URL = import.meta.env.DEV ? 'https://marketplace-backend-x2xl.onrender.com' : '';
       const response = await fetch(`${API_URL}/products`, {
@@ -34,20 +34,20 @@ const CategoryPage = () => {
           'Content-Type': 'application/json'
         }
       });
-      
+
       console.log('Response status:', response.status);
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       const data = await response.json();
       console.log('Fetched products:', data.length);
-      
+
       if (!Array.isArray(data)) {
         throw new Error('Expected array of products but got: ' + typeof data);
       }
-      
+
       setProducts(data);
     } catch (err) {
       console.error('Error fetching products:', err);
@@ -165,7 +165,7 @@ const CategoryPage = () => {
 
   return (
     <div className="page-container">
-      <NewNavbar />
+      {/* <NewNavbar /> */}
 
       {/* Breadcrumbs for navigation */}
       <Breadcrumbs productCategory={selectedCategory} />

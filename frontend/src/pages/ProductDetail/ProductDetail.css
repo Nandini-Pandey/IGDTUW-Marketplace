@@ -5,6 +5,7 @@ body {
 
 
 /* Product Detail Container */
+
 .product-detail__container {
   max-width: 1000px;
   margin: 8rem auto !important;
@@ -148,9 +149,120 @@ body {
   background: #2a4365;
 }
 
+/* Contact seller pop up css */
+.modal-overlay{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal{
+  background-color: white;
+  padding:20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  max-height:400px;
+  width:90%;
+  position: relative;
+  font-size:1.7rem ;
+  display: flex;
+  /* justify-content: space-around; */
+}
+
+.modal .seller-avatar{
+  height: 350px;
+  border-radius: 50%;
+  margin-right: 20px;
+  width:50%;
+}
+.seller-details h2{
+  font-size: 1.9rem;
+  color: #2c5282;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.seller-details{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 45%;
+}
+.contact-btn {
+  background-color:#2c5282;
+  color: white;
+  padding: 10px 12px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin: 5px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 1.2rem;
+}
+
+.contact-btn:hover {
+  background-color: #2a4365;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.seller-details p{
+  font-size: 1.35rem;
+  color: #4a5568;
+  margin-bottom: 0.4rem;
+  padding: 0;
+  max-height: fit-content;
+}
+.seller-details strong{
+  font-size: 1.35rem;
+}
+.seller-details a{
+  text-decoration: none;
+  /* color: #2c5282; */
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:10px;
+}
+.modal-actions{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+button.close-btn{
+  position:absolute;
+  top:15px;
+  right:15px;
+  background:none;
+  border:none;
+  font-size:2rem;
+  cursor:pointer;
+}
 /* Responsive Fix */
+
+@media (max-width:1050px){
+  .product-detail__container{
+    max-width:95%;
+  }
+}
+
+@media (max-width:960px ) and ( min-width: 801px) {
+  .product-details-section{
+    margin-top:180px;
+  }
+}
 @media (max-width: 768px) {
-   
   .product-detail__container {
     flex-direction: column;
     padding: 1rem;
@@ -168,5 +280,38 @@ body {
 
   .product-detail__info h1 {
     font-size: 1.5rem;
+  }
+}
+@media (max-width:814px){
+  .modal{
+    flex-direction: column;
+    align-items: center;
+    max-width: 90%;
+    max-height: 100%;
+  }
+  .seller-details{
+    width: 70%;
+  }
+  .modal-actions{
+  /* display: flex;
+  flex-direction: row; */
+    justify-content: center;
+    gap:30px;
+    margin-top:20px ;
+  }
+
+  .modal .seller-avatar{
+    width:60%;
+    height:auto;
+    margin: 0;
+  }
+}
+
+@media (max-width: 535px) {
+  .seller-details{
+    width: 100%;
+  }
+  .contact-btn{
+    padding: 10px;
   }
 }

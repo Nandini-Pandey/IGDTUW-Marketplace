@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { FaEnvelope, FaPhone, FaWhatsapp, FaTimes } from "react-icons/fa";
 import { useParams, useNavigate } from "react-router-dom";
 import NewNavbar from "../../components/newNavbar/newNavbar";
 import "./ProductDetail.css";
+import randomProfile from "../../assets/Contact-us-bro.png";
 
 const names = ["Aadya", "Siya", "Ishita", "Kavya", "Ananya", "Meera", "Sanya"];
 const years = ["1st Year", "2nd Year", "3rd Year", "4th Year"];
+
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -12,6 +15,7 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showModal, setShowModal] = useState(false);  // New state for modal
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -92,7 +96,7 @@ const ProductDetail = () => {
           </div>
 
           <div className="product-detail__actions">
-            <button className="product-detail__contact">Contact Seller</button>
+            <button className="product-detail__contact" onClick={() => setShowModal(true)}>Contact Seller</button>
             <button className="product-detail__wishlist">Add to Wishlist</button>
             <button onClick={() => navigate(-1)} className="product-detail__back">
               Back to Products
@@ -100,6 +104,49 @@ const ProductDetail = () => {
           </div>
         </div>
       </div>
+
+      {/* Seller Contact Modal */}
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <img src={randomProfile} alt="contact-seller" className="seller-avatar" />
+            <div className="seller-details">
+              <h2 className="seller-name">{randomName}</h2>
+              <p><strong>Year:</strong> {randomYear}</p>
+              <p><strong>Email:</strong> seller@example.com</p>
+              <p><strong>Phone:</strong> +91 9876543210</p>
+
+              <div className="modal-actions">
+                <a href="mailto:seller@example.com" className="contact-btn">
+                  <FaEnvelope /> Email Seller
+                </a>
+                {/* <a href={`https://wa.me/91${sellerPhoneNumber}`} // use actual number
+                  target="_blank"
+                  rel="noopener noreferrer" className="contact-btn">
+                  <FaWhatsapp /> WhatsApp Seller
+                </a> */}
+
+                {/* use the above syntax when you have the actual number */}
+                <a
+                  className="contact-btn"
+                  href={`https://wa.me/919910148836`} // use actual number
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FaWhatsapp /> WhatsApp Seller
+                </a>
+
+              </div>
+            </div>
+            <button
+              className="close-btn"
+              onClick={() => setShowModal(false)} // Close modal
+            >
+              &times;
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
